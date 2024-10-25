@@ -1,0 +1,83 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+
+# As MoveIt! does not support jerk limits, the acceleration limits provided here are the highest values that guarantee
+# that no jerk limits will be violated. More precisely, applying Euler differentiation in the worst case (from min accel
+# to max accel in 1 ms) the acceleration limits are the ones that satisfy
+# max_jerk = (max_acceleration - min_acceleration) / 0.001
+
+default_velocity_scaling_factor: 0.8  # 1.0
+default_acceleration_scaling_factor: 0.8  # 1.0
+
+joint_limits:
+  link1_to_link2:
+    has_position_limits: true
+    min_position: -2.879793  # 根据您的 URDF 文件设置
+    max_position: 2.879793   # 根据您的 URDF 文件设置
+    has_velocity_limits: true
+    max_velocity: 1.5  # 或根据您的机械臂实际参数
+    has_acceleration_limits: true
+    max_acceleration: 3.0  # 或根据您的机械臂实际参数
+    has_deceleration_limits: true
+    max_deceleration: 3.0  # 与 max_acceleration 相同
+  link2_to_link3:
+    has_position_limits: true
+    min_position: -2.879793
+    max_position: 2.879793
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 3.0
+    has_deceleration_limits: true
+    max_deceleration: 3.0
+  link3_to_link4:
+    has_position_limits: true
+    min_position: -2.879793
+    max_position: 2.879793
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 3.0
+    has_deceleration_limits: true
+    max_deceleration: 3.0
+  link4_to_link5:
+    has_position_limits: true
+    min_position: -2.879793
+    max_position: 2.879793
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 3.0
+    has_deceleration_limits: true
+    max_deceleration: 3.0
+  link5_to_link6:
+    has_position_limits: true
+    min_position: -2.879793
+    max_position: 2.879793
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 3.0
+    has_deceleration_limits: true
+    max_deceleration: 3.0
+  link6_to_link6flange:
+    has_position_limits: true
+    min_position: -3.05
+    max_position: 3.05
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 3.0
+    has_deceleration_limits: true
+    max_deceleration: 3.0
+  gripper_controller:
+    has_position_limits: true
+    min_position: -0.7
+    max_position: 0.15
+    has_velocity_limits: true
+    max_velocity: 2.792527
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+    has_deceleration_limits: true
+    max_deceleration: 5.0

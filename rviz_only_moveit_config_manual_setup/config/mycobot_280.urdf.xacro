@@ -1,0 +1,17 @@
+<!--  -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mycobot_280">
+    <!-- definced an argument for initial positions -->
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+    <!-- definced an argument for ros2_control_hardware_type -定义了ros2_control_hardware_type的默认值为mock_components ,如果没有传入参数将使用这个默认值-->
+    <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
+
+    <!-- import mycobot_280 urdf file   这个urdf文件是一个很纯粹的urdf文件-->
+    <xacro:include filename="$(find mycobot_description)/urdf/mycobot_280_urdf.xacro" />
+
+    <!--import mycobot_280 ros2_control  file  -->
+    <xacro:include filename="mycobot_280.ros2_control.xacro" />
+    <xacro:include filename="mycobot_280_hand.ros2_control.xacro" />
+
+    <xacro:mycobot_280_ros2_control name="Mycobot280FakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+    <xacro:mycobot_280_hand_ros2_control name="Mycobot280HandFakeSystem" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+</robot>
