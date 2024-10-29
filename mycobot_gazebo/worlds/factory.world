@@ -1,0 +1,1152 @@
+<sdf version='1.6'>
+    <world name='factory'>
+      <light name='sun' type='directional'>
+        <cast_shadows>1</cast_shadows>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+        <diffuse>0.8 0.8 0.8 1</diffuse>
+        <specular>0.2 0.2 0.2 1</specular>
+        <attenuation>
+          <range>1000</range>
+          <constant>0.9</constant>
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <direction>-0.5 0.1 -0.9</direction>
+      </light>
+      <gravity>0 0 -9.8</gravity>
+      <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+      <atmosphere type='adiabatic'/>
+      <physics name='default_physics' default='0' type='ode'>
+        <max_step_size>0.001</max_step_size>
+        <real_time_factor>1</real_time_factor>
+        <real_time_update_rate>1000</real_time_update_rate>
+      </physics>
+      <scene>
+        <ambient>0.4 0.4 0.4 1</ambient>
+        <background>0.7 0.7 0.7 1</background>
+        <shadows>1</shadows>
+      </scene>
+      <wind/>
+      <spherical_coordinates>
+        <surface_model>EARTH_WGS84</surface_model>
+        <latitude_deg>0</latitude_deg>
+        <longitude_deg>0</longitude_deg>
+        <elevation>0</elevation>
+        <heading_deg>0</heading_deg>
+      </spherical_coordinates>
+      <model name='workcell'>
+        <static>1</static>
+        <link name='workcell_link'>
+          <visual name='workcell_visual'>
+            <geometry>
+              <mesh>
+                <uri>model://workcell/meshes/mesh.dae</uri>
+              </mesh>
+            </geometry>
+          </visual>
+          <collision name='floor'>
+            <pose frame=''>0 0 -0.1 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>20.1026 20.1026 0.2</size>
+              </box>
+            </geometry>
+            <surface>
+              <contact>
+                <ode>
+                  <max_vel>0</max_vel>
+                  <min_depth>0.001</min_depth>
+                </ode>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+            <max_contacts>10</max_contacts>
+          </collision>
+          <self_collide>0</self_collide>
+          <enable_wind>0</enable_wind>
+          <kinematic>0</kinematic>
+        </link>
+        <pose frame=''>-0.086987 0.210744 0 0 -0 0</pose>
+      </model>
+
+      <state world_name='factory'>
+        
+        <model name='table'>
+          <pose frame=''>9 6 0 0 0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='table_link'>
+            <pose frame=''>9  6 0 0 0 0</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name="grub_object_1">
+          <pose>9 6 1.015 0 0 0</pose>  <!-- 圆柱体位于桌子表面上 -->
+          <scale>1 1 1</scale>
+          <static>false</static>  <!-- 是否为静态物体 -->
+          <link name="grub_object_1_link">
+            <pose>9 6 1.015 0 0 0</pose>  <!-- 内部姿态 -->
+            <velocity>0 0 0 0 0 0</velocity>
+            <acceleration>0 0 0 0 0 0</acceleration>
+            <wrench>0 0 0 0 0 0</wrench>
+          </link>
+        </model>
+
+        <model name="grub_object_2">
+          <pose>9.1 6 1.015 0 0 0</pose>  <!-- 圆柱体位于桌子表面上 -->
+          <scale>1 1 1</scale>
+          <static>false</static>  <!-- 是否为静态物体 -->
+          <link name="grub_object_2_link">
+            <pose>9.1 6 1.015 0 0 0</pose>  <!-- 内部姿态 -->
+            <velocity>0 0 0 0 0 0</velocity>
+            <acceleration>0 0 0 0 0 0</acceleration>
+            <wrench>0 0 0 0 0 0</wrench>
+          </link>
+        </model>
+
+        <model name='table_clone'>
+          <pose frame=''>1.5 5 0 0 0 1.5708</pose>
+          <scale>1 1 1</scale>
+          <link name='table_clone_link'>
+            <pose frame=''>1.5 5 0 0 0 1.5708</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+        
+        <model name='invisible_wall_1'>
+          <pose frame=''>1 4.5 2.5 0 0 1.5708</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_1'>
+            <pose frame=''>1 4.5 2.5 0 0 1.5708</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name='invisible_wall_2'>
+          <pose frame=''>5.45 6.55 2.5 0 0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_2'>
+            <pose frame=''>5.45 6.55 2.5 0 0 0</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name='invisible_wall_3'>
+          <pose frame=''>2.45 2.45 2.5 0 0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_3'>
+            <pose frame=''>2.45 2.45 2.5 0 0 0</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name='invisible_wall_4'>
+          <pose frame=''>4 2.8 2.5 0 0 1.5708</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_1'>
+            <pose frame=''>4 2.8 2.5 0 0 1.5708</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name='invisible_wall_5'>
+          <pose frame=''>6.95 3.25 2.5 0 0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_1'>
+            <pose frame=''>6.95 3.25 2.5 0 0 0</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name='invisible_wall_6'>
+          <pose frame=''>9.9 4.9 2.5 0 0 1.5708</pose>
+          <scale>1 1 1</scale>
+          <link name='invisible_wall_6'>
+            <pose frame=''>9.9 4.9 2.5 0 0 1.5708</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <model name="red_box">
+          <pose>1.5 4.5 1.015 0 0 0</pose>  <!-- 圆柱体位于桌子表面上 -->
+          <scale>1 1 1</scale>
+          <static>false</static>  <!-- 是否为静态物体 -->
+          <link name="red_box_link">
+            <pose>1.5 4.5 1.015 0 0 0</pose>  <!-- 内部姿态 -->
+            <velocity>0 0 0 0 0 0</velocity>
+            <acceleration>0 0 0 0 0 0</acceleration>
+            <wrench>0 0 0 0 0 0</wrench>
+          </link>
+        </model>
+
+        <model name="blue_box">
+          <pose>1.5 5.5 1.015 0 0 0</pose>  <!-- 圆柱体位于桌子表面上 -->
+          <scale>1 1 1</scale>
+          <static>false</static>  <!-- 是否为静态物体 -->
+          <link name="blue_box_link">
+            <pose>1.5 5.5 1.015 0 0 0</pose>  <!-- 内部姿态 -->
+            <velocity>0 0 0 0 0 0</velocity>
+            <acceleration>0 0 0 0 0 0</acceleration>
+            <wrench>0 0 0 0 0 0</wrench>
+          </link>
+        </model>
+
+        <model name='workcell'>
+          <pose frame=''>-0.086987 0.210744 0 0 -0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='workcell_link'>
+            <pose frame=''>-0.086987 0.210744 0 0 -0 0</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0 0 0 0 -0 0</acceleration>
+            <wrench>0 0 0 0 -0 0</wrench>
+          </link>
+        </model>
+
+        <light name='sun'>
+          <pose frame=''>0 0 10 0 -0 0</pose>
+        </light>
+
+        <light name='user_spot_light_0_clone_clone'>
+          <pose frame=''>-4.22523 -4.87712 7.17268 0 -0 0</pose>
+        </light>
+
+        <light name='user_spot_light_0_clone_clone_clone'>
+          <pose frame=''>0.543716 1.56833 7.17268 0 -0 0</pose>
+        </light>
+
+        <light name='user_spot_light_0_clone_clone_clone_clone_clone'>
+          <pose frame=''>4.47445 -6.80903 7.17268 0 -0 0</pose>
+        </light>
+      </state>
+
+      <gui fullscreen='0'>
+        <camera name='user_camera'>
+          <pose frame=''>30.816 -29.1579 31.1124 0 0.737795 2.10271</pose>
+          <view_controller>orbit</view_controller>
+          <projection_type>perspective</projection_type>
+        </camera>
+      </gui>
+
+      <model name='table'>
+        <static>1</static>
+        <link name='table_link'>
+          <collision name='table_surface'>
+            <pose frame=''>0 0 0.3 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>1.5 0.8 0.03</size>
+              </box>
+            </geometry>
+            <surface>
+              <friction>
+                <ode>
+                  <mu>0.6</mu>
+                  <mu2>0.6</mu2>
+                </ode>
+                <torsional>
+                  <ode/>
+                </torsional>
+              </friction>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+            </surface>
+            <max_contacts>10</max_contacts>
+          </collision>
+          <visual name='table_visual'>
+            <pose frame=''>0 0 0.315 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>1.5 0.8 0.03</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Wood</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_front_left_leg'>
+            <pose frame=''>0.68 0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_front_left_leg'>
+            <pose frame=''>0.68 0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_front_right_leg'>
+            <pose frame=''>0.68 -0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_front_right_leg'>
+            <pose frame=''>0.68 -0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_back_right_leg'>
+            <pose frame=''>-0.68 -0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_back_right_leg'>
+            <pose frame=''>-0.68 -0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_back_left_leg'>
+            <pose frame=''>-0.68 0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_back_left_leg'>
+            <pose frame=''>-0.68 0.38 0.15 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.3</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <self_collide>0</self_collide>
+          <enable_wind>0</enable_wind>
+          <kinematic>0</kinematic>
+        </link>
+        <pose frame=''>19.256 -0.907717 0 0 -0 0</pose>
+      </model>
+      <model name='table_clone'>
+        <static>1</static>
+        <link name='table_clone_link'>
+          <collision name='table_clone_surface'>
+            <pose frame=''>0 0 1 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>1.5 0.8 0.03</size>
+              </box>
+            </geometry>
+            <surface>
+              <friction>
+                <ode>
+                  <mu>0.6</mu>
+                  <mu2>0.6</mu2>
+                </ode>
+                <torsional>
+                  <ode/>
+                </torsional>
+              </friction>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+            </surface>
+            <max_contacts>10</max_contacts>
+          </collision>
+          <visual name='table_clone_visual'>
+            <pose frame=''>0 0 1 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>1.5 0.8 0.03</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Wood</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_clone_front_left_leg'>
+            <pose frame=''>0.68 0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_clone_front_left_leg'>
+            <pose frame=''>0.68 0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_clone_front_right_leg'>
+            <pose frame=''>0.68 -0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_clone_front_right_leg'>
+            <pose frame=''>0.68 -0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_clone_back_right_leg'>
+            <pose frame=''>-0.68 -0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_clone_back_right_leg'>
+            <pose frame=''>-0.68 -0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <collision name='table_clone_back_left_leg'>
+            <pose frame=''>-0.68 0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='table_clone_back_left_leg'>
+            <pose frame=''>-0.68 0.38 0.5 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>1</length>
+              </cylinder>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Grey</name>
+              </script>
+            </material>
+          </visual>
+          <self_collide>0</self_collide>
+          <enable_wind>0</enable_wind>
+          <kinematic>0</kinematic>
+        </link>
+        <pose frame=''>21.256 -0.907717 0 0 -0 0</pose>
+      </model>
+
+      <model name="red_box">
+        <!-- 掏空盒子的中心位置 -->
+        <pose>21.256 -0.907717 1.015 0 0 0</pose>  <!-- 盒子放在桌面上 -->
+        
+        <!-- 定义盒子的底面 -->
+        <link name="red_box_link">
+          <collision name="red_box_bottom">
+            <pose>0 0 -0.045 0 0 0</pose>  <!-- 位于盒子底部 -->
+            <geometry>
+              <box>
+                <size>0.28 0.28 0.01</size>  <!-- 底面的厚度为0.01米 -->
+              </box>
+            </geometry>
+          </collision>
+          <visual name="red_box_visual_bottom">
+            <pose>0 0 -0.045 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>0.28 0.28 0.01</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="red_box_left">
+            <pose>-0.145 0 0 0 0 0</pose>  <!-- 位于盒子左侧 -->
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>  <!-- 左侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+          </collision>
+          <visual name="red_box_visual_left">
+            <pose>-0.145 0 0 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="red_box_right">
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>  <!-- 右侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0.145 0 0 0 0 0</pose>  <!-- 位于盒子右侧 -->
+          </collision>
+          <visual name="red_box_visual_right">
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>
+              </box>
+            </geometry>
+            <pose>0.145 0 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="red_box_front">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>  <!-- 前侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0 0.145 0 0 0 0</pose>  <!-- 位于盒子前侧 -->
+          </collision>
+          <visual name="red_box_visual_front">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>
+              </box>
+            </geometry>
+            <pose>0 0.145 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="red_box_back">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>  <!-- 后侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0 -0.145 0 0 0 0</pose>  <!-- 位于盒子后侧 -->
+          </collision>
+          <visual name="red_box_visual_back">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>
+              </box>
+            </geometry>
+            <pose>0 -0.145 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+        </link>
+      
+      </model>
+
+      <model name="blue_box">
+        <!-- 掏空盒子的中心位置 -->
+        <pose>21.256 -0.907717 1.015 0 0 0</pose>  <!-- 盒子放在桌面上 -->
+        
+        <!-- 定义盒子的底面 -->
+        <link name="blue_box_link">
+          <collision name="blue_box_bottom">
+            <pose>0 0 -0.045 0 0 0</pose>  <!-- 位于盒子底部 -->
+            <geometry>
+              <box>
+                <size>0.28 0.28 0.01</size>  <!-- 底面的厚度为0.01米 -->
+              </box>
+            </geometry>
+          </collision>
+          <visual name="blue_box_visual_bottom">
+            <pose>0 0 -0.045 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>0.28 0.28 0.01</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="blue_box_left">
+            <pose>-0.145 0 0 0 0 0</pose>  <!-- 位于盒子左侧 -->
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>  <!-- 左侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+          </collision>
+          <visual name="blue_box_visual_left">
+            <pose>-0.145 0 0 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>
+              </box>
+            </geometry>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="blue_box_right">
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>  <!-- 右侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0.145 0 0 0 0 0</pose>  <!-- 位于盒子右侧 -->
+          </collision>
+          <visual name="blue_box_visual_right">
+            <geometry>
+              <box>
+                <size>0.01 0.3 0.1</size>
+              </box>
+            </geometry>
+            <pose>0.145 0 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="blue_box_front">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>  <!-- 前侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0 0.145 0 0 0 0</pose>  <!-- 位于盒子前侧 -->
+          </collision>
+          <visual name="blue_box_visual_front">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>
+              </box>
+            </geometry>
+            <pose>0 0.145 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+          <collision name="blue_box_back">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>  <!-- 后侧面的厚度为0.01米 -->
+              </box>
+            </geometry>
+            <pose>0 -0.145 0 0 0 0</pose>  <!-- 位于盒子后侧 -->
+          </collision>
+          <visual name="blue_box_visual_back">
+            <geometry>
+              <box>
+                <size>0.28 0.01 0.1</size>
+              </box>
+            </geometry>
+            <pose>0 -0.145 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 红色材质 -->
+              </script>
+            </material>
+          </visual>
+        </link>
+      
+      </model>
+      
+      <model name="grub_object_1">
+        <link name="grub_object_1_link">
+          <!-- 圆柱体的惯性属性 -->
+            <inertial>
+              <mass>0.1</mass>
+              <inertia>
+                <ixx>0.00002333</ixx>
+                <iyy>0.00002333</iyy>
+                <izz>0.000005</izz>
+                <ixy>0</ixy>
+                <ixz>0</ixz>
+                <iyz>0</iyz>
+              </inertia>
+            </inertial>
+          <!-- 圆柱体的碰撞属性 -->
+          <collision name="grub_object_1_collision">
+            <geometry>
+              <cylinder>
+                <radius>0.01</radius>
+                <length>0.05</length>
+              </cylinder>
+            </geometry>              
+            <pose>0 0 0 0 0 0</pose>
+          </collision>
+          <!-- 圆柱体的视觉属性 -->
+          <visual name="grub_object_1_visual">
+            <geometry>
+              <cylinder>
+                <radius>0.01</radius>
+                <length>0.05</length>
+              </cylinder>
+            </geometry>
+            <pose>0 0 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Red</name>  <!-- 使用标准材质 -->
+              </script>
+            </material>            
+          </visual>
+        </link>
+      </model>      
+
+      <model name="grub_object_2">
+        <link name="grub_object_2_link">
+          <!-- 圆柱体的惯性属性 -->
+            <inertial>
+              <mass>0.1</mass>
+              <inertia>
+                <ixx>0.00002333</ixx>
+                <iyy>0.00002333</iyy>
+                <izz>0.000005</izz>
+                <ixy>0</ixy>
+                <ixz>0</ixz>
+                <iyz>0</iyz>
+              </inertia>
+            </inertial>
+          <!-- 圆柱体的碰撞属性 -->
+          <collision name="grub_object_2_collision">
+            <geometry>
+              <cylinder>
+                <radius>0.01</radius>
+                <length>0.05</length>
+              </cylinder>
+            </geometry>              
+            <pose>0 0 0 0 0 0</pose>
+          </collision>
+          <!-- 圆柱体的视觉属性 -->
+          <visual name="grub_object_2_visual">
+            <geometry>
+              <cylinder>
+                <radius>0.01</radius>
+                <length>0.05</length>
+              </cylinder>
+            </geometry>
+            <pose>0 0 0 0 0 0</pose>
+            <material>
+              <script>
+                <uri>file://media/materials/scripts/gazebo.material</uri>
+                <name>Gazebo/Blue</name>  <!-- 使用标准材质 -->
+              </script>
+            </material>            
+          </visual>
+        </link>
+      </model>  
+
+      <model name="invisible_wall_1">
+        <static>true</static>
+        <link name="invisible_wall_1_link">
+          <collision name="invisible_wall_1_collision">
+            <geometry>
+              <box>
+                <size>4 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_1_visual">
+            <geometry>
+              <box>
+                <size>4 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>  
+          </visual>
+        </link>
+      </model>
+      
+      <model name="invisible_wall_2">
+        <static>true</static>
+        <link name="invisible_wall_2_link">
+          <collision name="invisible_wall_2_collision">
+            <geometry>
+              <box>
+                <size>9 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_2_visual">
+            <geometry>
+              <box>
+                <size>9 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>   
+          </visual>
+        </link>
+      </model>
+
+      <model name="invisible_wall_3">
+        <static>true</static>
+        <link name="invisible_wall_3_link">
+          <collision name="invisible_wall_3_collision">
+            <geometry>
+              <box>
+                <size>3 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_3_visual">
+            <geometry>
+              <box>
+                <size>3 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>
+          </visual>
+        </link>
+      </model>
+
+      <model name="invisible_wall_4">
+        <static>true</static>
+        <link name="invisible_wall_4_link">
+          <collision name="invisible_wall_4_collision">
+            <geometry>
+              <box>
+                <size>0.8 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_4_visual">
+            <geometry>
+              <box>
+                <size>0.8 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>   
+          </visual>
+        </link>
+      </model>
+
+      <model name="invisible_wall_5">
+        <static>true</static>
+        <link name="invisible_wall_5_link">
+          <collision name="invisible_wall_5_collision">
+            <geometry>
+              <box>
+                <size>6 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_5_visual">
+            <geometry>
+              <box>
+                <size>6 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>   
+          </visual>
+        </link>
+      </model>
+
+      <model name="invisible_wall_6">
+        <static>true</static>
+        <link name="invisible_wall_6_link">
+          <collision name="invisible_wall_6_collision">
+            <geometry>
+              <box>
+                <size>3.2 0.1 5</size>
+              </box>
+            </geometry>
+          </collision>
+          <visual name="invisible_wall_5_visual">
+            <geometry>
+              <box>
+                <size>3.2 0.1 5</size>
+              </box>
+            </geometry>
+            <transparency>1.0</transparency>  
+          </visual>
+        </link>
+      </model>
+
+      <light name='user_spot_light_0_clone_clone' type='spot'>
+        <pose frame=''>-4.22523 -4.87712 7.17268 0 -0 0</pose>
+        <diffuse>0.5 0.5 0.5 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+        <direction>0 0 -1</direction>
+        <attenuation>
+          <range>20</range>
+          <constant>0.5</constant>
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <cast_shadows>0</cast_shadows>
+        <spot>
+          <inner_angle>0.6</inner_angle>
+          <outer_angle>1</outer_angle>
+          <falloff>1</falloff>
+        </spot>
+      </light>
+
+      <light name='user_spot_light_0_clone_clone_clone' type='spot'>
+        <pose frame=''>0.543716 1.56833 7.17268 0 -0 0</pose>
+        <diffuse>0.5 0.5 0.5 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+        <direction>0 0 -1</direction>
+        <attenuation>
+          <range>20</range>
+          <constant>0.5</constant>
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <cast_shadows>0</cast_shadows>
+        <spot>
+          <inner_angle>0.6</inner_angle>
+          <outer_angle>1</outer_angle>
+          <falloff>1</falloff>
+        </spot>
+      </light>
+
+      <light name='user_spot_light_0_clone_clone_clone_clone_clone' type='spot'>
+        <pose frame=''>4.47445 -6.80903 7.17268 0 -0 0</pose>
+        <diffuse>0.5 0.5 0.5 1</diffuse>
+        <specular>0.1 0.1 0.1 1</specular>
+        <direction>0 0 -1</direction>
+        <attenuation>
+          <range>20</range>
+          <constant>0.5</constant>
+          <linear>0.01</linear>
+          <quadratic>0.001</quadratic>
+        </attenuation>
+        <cast_shadows>0</cast_shadows>
+        <spot>
+          <inner_angle>0.6</inner_angle>
+          <outer_angle>1</outer_angle>
+          <falloff>1</falloff>
+        </spot>
+      </light>
+    </world>
+  </sdf>

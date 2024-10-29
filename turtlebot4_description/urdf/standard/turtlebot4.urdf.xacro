@@ -8,10 +8,10 @@
   <xacro:include filename="$(find turtlebot4_description)/urdf/standard/tower_standoff.urdf.xacro" />
   <xacro:include filename="$(find turtlebot4_description)/urdf/standard/tower_sensor_plate.urdf.xacro" />
   <xacro:include filename="$(find turtlebot4_description)/urdf/standard/weight_block.urdf.xacro" />
+  <!-- 
   <xacro:include filename="$(find turtlebot4_description)/urdf/body/body.urdf.xacro" />
-  <xacro:include filename="$(find turtlebot4_description)/urdf/arm/right_arm.urdf.xacro" />
-  <xacro:include filename="$(find turtlebot4_description)/urdf/arm/left_arm.urdf.xacro" />
-
+  <xacro:include filename="$(find turtlebot4_description)/urdf/arm/arm.urdf.xacro" />
+  -->
 
   <!-- Mechanical properties -->
   <xacro:property name="shell_z_offset"                value="${3*cm2m}" />
@@ -112,11 +112,16 @@
   <xacro:tower_sensor_plate name="tower_sensor_plate">
     <origin xyz="0 0 ${tower_sensor_plate_z_offset}"/>
   </xacro:tower_sensor_plate>
-
+  <!-- 
   <xacro:body name="body">
     <origin xyz="0 0 ${tower_standoff_z_offset+0.003}"/>
   </xacro:body>
 
+  <xacro:arm name="arm">
+    <origin xyz="0 0 0.17" rpy="0 0 ${3*pi/2}" />
+  </xacro:arm>
+   -->
+  <!-- 
   <xacro:right_arm name="right_arm">
     <origin xyz="0 0.06 0" rpy="${3*pi/2} ${3*pi/2} 0" />
   </xacro:right_arm>
@@ -124,6 +129,7 @@
   <xacro:left_arm name="left_arm">
     <origin xyz="0 -0.06 0" rpy="${pi/2} ${pi/2} 0" />
   </xacro:left_arm>
+   -->
 
   <!-- Turtlebot4 sensor definitions -->
 

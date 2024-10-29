@@ -172,6 +172,6 @@
   <gazebo reference="${name}_imu_joint">
     <preserveFixedJoint>true</preserveFixedJoint>
   </gazebo>
-
+  
 </xacro:macro>
 </robot>

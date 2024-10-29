@@ -2,7 +2,7 @@
 <sdf version="1.6">
     <world name='default'>
         <!-- To add realistic gravity, do: 0.0 0.0 -9.8, otherwise do 0.0 0.0 0.0 -->
-        <gravity>0.0 0.0 0.0</gravity>        
+        <gravity>0.0 0.0 -9.8</gravity>        
         <gui>
             <camera name='gzclient_camera'>
                  <pose>5.547405 -0.620332 17.841953 0 1.305797 3.131994</pose>

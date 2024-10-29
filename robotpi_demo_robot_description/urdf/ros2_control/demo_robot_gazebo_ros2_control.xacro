@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="car">
+    <!-- The Gazebo plugin for ros2_control -->
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <robot_param>robot_description</robot_param>
+            <robot_param_node>robot_state_publisher</robot_param_node>
+            <parameters>$(find robotpi_demo_robot_description)/config/demo_robot_arm_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+</robot>

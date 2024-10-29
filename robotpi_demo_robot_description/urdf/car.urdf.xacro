@@ -1,0 +1,11 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="car">
+    <xacro:include filename="$(find robotpi_demo_robot_description)/urdf/car_base/car_base.urdf.xacro" />
+    <xacro:include filename="$(find robotpi_demo_robot_description)/urdf/camera/camera.urdf.xacro" />
+    <xacro:include filename="$(find robotpi_demo_robot_description)/urdf/lidar/lidar.urdf.xacro" />
+    <xacro:include filename="$(find robotpi_demo_robot_description)/urdf/arm/arm.urdf.xacro" />
+
+    <xacro:arm name="arm">
+        <origin xyz="${-car_length/6} 0 ${car_height / 2 + 0.03}" rpy="0 0 ${3 * PI / 2}" />
+      </xacro:arm>
+
+</robot>
