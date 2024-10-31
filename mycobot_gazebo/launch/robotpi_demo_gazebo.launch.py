@@ -17,10 +17,10 @@ def generate_launch_description():
   package_name_gazebo = 'mycobot_gazebo'
 
   rviz_config_file_path = 'rviz/robotpi_demo.rviz'
-  urdf_file_path = 'urdf/car.urdf.xacro' #'urdf/lite/turtlebot4.urdf.xacro'#
+  urdf_file_path = 'urdf/lite/car_lite.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models/factory'#factory
-  world_file_path = 'worlds/factory.world'#'world/house_classic.world'#'world/factory.world'
+  world_file_path = 'worlds/factory.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
   default_robot_name = 'car'
 
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros') 
@@ -43,13 +43,15 @@ def generate_launch_description():
   use_simulator = LaunchConfiguration('use_simulator')
   world = LaunchConfiguration('world')
 
-    # Set the default pose
+  # Set the default pose
+
   x = LaunchConfiguration('x')
   y = LaunchConfiguration('y')
   z = LaunchConfiguration('z')
   roll = LaunchConfiguration('roll')
   pitch = LaunchConfiguration('pitch')
   yaw = LaunchConfiguration('yaw')
+
   
   # Declare the launch arguments  
   declare_robot_name_cmd = DeclareLaunchArgument(
@@ -127,41 +129,12 @@ def generate_launch_description():
     default_value='1.5708',
     description='yaw angle of initial orientation, radians')
 
+
   set_env_vars_resources = AppendEnvironmentVariable(
     'GAZEBO_MODEL_PATH',
     gazebo_models_path)
-  
-  start_arm_controller_cmd = Node(
-    package="controller_manager",
-    executable="spawner",
-    arguments=[
-      "arm_controller",
-      "--controller-manager",
-      "/controller_manager"
-    ]
-  )  
 
-  start_gripper_controller_cmd = Node(
-    package="controller_manager",
-    executable="spawner",
-    arguments=[
-      "grip_action_controller",
-      "--controller-manager",
-      "/controller_manager"
-    ],
-  )  
 
-  start_joint_state_broadcaster_cmd = Node(
-    package="controller_manager",
-    executable="spawner",
-    arguments=[
-      "joint_state_broadcaster",
-      "--controller-manager",
-      "/controller_manager"
-    ]
-  )  
-
-  
   # Start Gazebo server
   start_gazebo_server_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
@@ -215,12 +188,12 @@ def generate_launch_description():
     arguments=[
       '-entity', robot_name,
       '-topic', "robot_description",  
-      '-x', x,
-      '-y', y,
-      '-z', z,
-      '-R', roll,
-      '-P', pitch,
-      '-Y', yaw
+      '-x',x,
+      '-y',y,
+      '-z',x,
+      '-R',roll,
+      '-P',pitch,
+      '-Y',yaw,
       ],
     output='screen')  
     
@@ -238,6 +211,7 @@ def generate_launch_description():
   ld.add_action(declare_use_simulator_cmd)
   ld.add_action(declare_world_cmd)
 
+
   ld.add_action(declare_x_cmd)
   ld.add_action(declare_y_cmd)
   ld.add_action(declare_z_cmd)
@@ -245,14 +219,12 @@ def generate_launch_description():
   ld.add_action(declare_pitch_cmd)
   ld.add_action(declare_yaw_cmd)  
 
+
   # Add any actions
   ld.add_action(set_env_vars_resources)
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(start_gazebo_client_cmd)
 
-  ld.add_action(start_arm_controller_cmd) 
-  ld.add_action(start_joint_state_broadcaster_cmd)
-  ld.add_action(start_gripper_controller_cmd) 
   ld.add_action(start_robot_state_publisher_cmd)
   ld.add_action(start_joint_state_publisher_cmd)
   ld.add_action(start_rviz_cmd)

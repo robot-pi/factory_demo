@@ -7,20 +7,11 @@
   <maintainer email="puddingsai0725@gmail.com">marcus</maintainer>
   <license>TODO: License declaration</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>ros2launch</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>joint_state_publisher</exec_depend>
-  <exec_depend>rviz2</exec_depend>
-  <depend>controller_manager</depend>
+  <depend>ament_cmake</depend>
+  <depend>rviz2</depend>
   <depend>gazebo_ros</depend>
-  <depend>gazebo_ros2_control</depend>
   <depend>gazebo_ros_pkgs</depend>
-  <depend>gripper_controllers</depend>
   <depend>rclcpp</depend>
-  <depend>ros2_control</depend>
-  <depend>ros2_controllers</depend>
-  <depend>trajectory_msgs</depend>
   <depend>xacro</depend>
 
   <test_depend>ament_lint_auto</test_depend>

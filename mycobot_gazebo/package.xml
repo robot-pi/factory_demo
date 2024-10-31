@@ -7,22 +7,14 @@
   <maintainer email="automaticaddison@todo.com">Addison Sears-Collins</maintainer>
   <license>BSD-3-Clause</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>ament_cmake</depend>
 
-  <depend>controller_manager</depend>
   <depend>gazebo_ros</depend>
-  <depend>gazebo_ros2_control</depend>
   <depend>gazebo_ros_pkgs</depend>
-  <depend>gripper_controllers</depend>
   <depend>rclcpp</depend>
-  <depend>ros_gz</depend>
-  <depend>ros_gz_bridge</depend>
-  <depend>ros_gz_sim</depend>
-  <depend>ros_gz_image</depend>
-  <depend>ros2_control</depend>
-  <depend>ros2_controllers</depend>
-  <depend>trajectory_msgs</depend>
   <depend>xacro</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>robot_state_publisher</depend>
 
 
   <test_depend>ament_lint_auto</test_depend>
