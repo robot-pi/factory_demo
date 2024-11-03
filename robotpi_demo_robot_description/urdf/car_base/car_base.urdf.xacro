@@ -94,6 +94,29 @@
     <xacro:wheel_func link_name="back_left" front_flag="-1" left_flag="1"/>
     <xacro:wheel_func link_name="back_right" front_flag="-1" left_flag="-1"/>
 
+    <!-- Plugin for wheels -->
+    <gazebo>
+        <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+            <left_joint>front_left_to_base_link</left_joint>
+            <right_joint>front_right_to_base_link</right_joint>
+    
+            <wheel_separation>${car_width}</wheel_separation>
+            <wheel_diameter>${wheel_radius*2}</wheel_diameter>
+
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+    
+            <max_wheel_torque>1</max_wheel_torque>
+            <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>false</publish_wheel_tf>
+
+        </plugin>
+    </gazebo>
+
     <gazebo reference="base_link">
         <material>Gazebo/Yellow</material>
     </gazebo>

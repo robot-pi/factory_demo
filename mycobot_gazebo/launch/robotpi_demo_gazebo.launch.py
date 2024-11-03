@@ -10,6 +10,7 @@ from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import TimerAction
 
 def generate_launch_description():
 
@@ -227,8 +228,8 @@ def generate_launch_description():
 
   ld.add_action(start_robot_state_publisher_cmd)
   ld.add_action(start_joint_state_publisher_cmd)
-  ld.add_action(start_rviz_cmd)
   
   ld.add_action(start_gazebo_ros_spawner_cmd)
+  ld.add_action(TimerAction(period=5.0, actions=[start_rviz_cmd]))
 
   return ld
