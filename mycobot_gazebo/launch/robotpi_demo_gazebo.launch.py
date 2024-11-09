@@ -18,11 +18,11 @@ def generate_launch_description():
   package_name_gazebo = 'mycobot_gazebo'
 
   rviz_config_file_path = 'rviz/robotpi_demo.rviz'
-  urdf_file_path = 'urdf/lite/car_lite.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro'
+  urdf_file_path = 'urdf/arm/panda.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models/factory'#factory
-  world_file_path = 'worlds/factory.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
-  default_robot_name = 'car'
+  world_file_path = 'worlds/empty_classic.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
+  default_robot_name = 'panda' #'mycobot_280' #'car' #'panda'
 
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros') 
   pkg_share_description = FindPackageShare(package=package_name_description).find(package_name_description)
@@ -189,12 +189,12 @@ def generate_launch_description():
     arguments=[
       '-entity', robot_name,
       '-topic', "robot_description",  
-      '-x',x,
-      '-y',y,
-      '-z',x,
-      '-R',roll,
-      '-P',pitch,
-      '-Y',yaw,
+      '-x', x,
+      '-y', y,
+      '-z', z,
+      '-R', roll,
+      '-P', pitch,
+      '-Y', yaw
       ],
     output='screen')  
     

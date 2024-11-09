@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mycobot_moveit_config_manual_setup</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="puddingsai0725@gmail.com">marcus</maintainer>
+  <license>TODO: License declaration</license>
+
+  <depend>ament_cmake</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_move_group</depend>
+  <depend>moveit_kinematics</depend>
+  <depend>moveit_planners_ompl</depend>
+  <depend>moveit_ros_visualization</depend>
+  <depend>rviz2</depend>
+  <depend>rviz_visual_tools</depend> 
+ 
+  <depend>moveit_simple_controller_manager</depend>
+  <depend>moveit_configs_utils</depend>
+  <depend>pilz_industrial_motion_planner</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

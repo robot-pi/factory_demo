@@ -11,12 +11,16 @@ find_package(gazebo_ros REQUIRED)
 find_package(gazebo_ros_pkgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(xacro REQUIRED)
-
+find_package(controller_manager REQUIRED)
+find_package(gripper_controllers REQUIRED)
+find_package(ros2_control REQUIRED)
+find_package(ros2_controllers REQUIRED)
+find_package(trajectory_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-install(DIRECTORY rviz urdf
+install(DIRECTORY rviz urdf meshes config
     DESTINATION share/${PROJECT_NAME}
 )
 
