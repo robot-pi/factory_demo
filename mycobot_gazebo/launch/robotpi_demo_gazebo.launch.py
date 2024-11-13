@@ -4,7 +4,7 @@
 import os
 from launch import LaunchDescription
 from launch.actions import AppendEnvironmentVariable, DeclareLaunchArgument, IncludeLaunchDescription
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
@@ -18,11 +18,11 @@ def generate_launch_description():
   package_name_gazebo = 'mycobot_gazebo'
 
   rviz_config_file_path = 'rviz/robotpi_demo.rviz'
-  urdf_file_path = 'urdf/arm/panda.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
+  urdf_file_path = 'urdf/lite/car_lite.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models/factory'#factory
-  world_file_path = 'worlds/empty_classic.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
-  default_robot_name = 'panda' #'mycobot_280' #'car' #'panda'
+  world_file_path = 'worlds/factory.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
+  default_robot_name = 'car' #'mycobot_280' #'car' #'panda'
 
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros') 
   pkg_share_description = FindPackageShare(package=package_name_description).find(package_name_description)
@@ -52,8 +52,12 @@ def generate_launch_description():
   roll = LaunchConfiguration('roll')
   pitch = LaunchConfiguration('pitch')
   yaw = LaunchConfiguration('yaw')
+  use_slam = LaunchConfiguration("use_slam")
 
-  
+  use_slam_arg = DeclareLaunchArgument(
+        "use_slam",
+        default_value="false"
+  )
   # Declare the launch arguments  
   declare_robot_name_cmd = DeclareLaunchArgument(
     name='robot_name',
