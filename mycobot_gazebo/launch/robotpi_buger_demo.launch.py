@@ -1,6 +1,3 @@
-# Author: Addison Sears-Collins
-# Date: April 17, 2024
-# Description: Launch a robotic arm in Gazebo (Classic)
 import os
 from launch import LaunchDescription
 from launch.actions import AppendEnvironmentVariable, DeclareLaunchArgument, IncludeLaunchDescription
@@ -18,11 +15,11 @@ def generate_launch_description():
   package_name_gazebo = 'mycobot_gazebo'
 
   rviz_config_file_path = 'rviz/robotpi_demo3.rviz'
-  urdf_file_path = 'urdf/arm/mycobot280.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
+  urdf_file_path = 'urdf/arm/panda.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models/factory'#factory
-  world_file_path = 'worlds/empty_classic.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world
-  default_robot_name = 'mycobot_280' #'mycobot_280' #'car' #'panda'
+  world_file_path = 'worlds/burger_assemble.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world burger_assemble
+  default_robot_name = 'panda' #'mycobot_280' #'car' #'panda'
 
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros') 
   pkg_share_description = FindPackageShare(package=package_name_description).find(package_name_description)
@@ -112,7 +109,7 @@ def generate_launch_description():
     
   declare_z_cmd = DeclareLaunchArgument(
     name='z',
-    default_value='0.05',
+    default_value='1.015',
     description='z component of initial position, meters')
     
   declare_roll_cmd = DeclareLaunchArgument(

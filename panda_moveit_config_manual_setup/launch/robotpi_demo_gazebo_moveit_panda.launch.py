@@ -1,3 +1,7 @@
+# Author: Addison Sears-Collins
+# Date: July 31, 2024
+# Description: Launch MoveIt 2 for the myCobot robotic arm
+ 
 import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, EmitEvent, RegisterEventHandler
@@ -14,13 +18,13 @@ import xacro
 def generate_launch_description():
  
     # Constants for paths to different files and folders
-    package_name_moveit_config = 'mycobot_moveit_config_manual_setup'
+    package_name_moveit_config = 'panda_moveit_config_manual_setup'
  
     # Set the path to different files and folders
     pkg_share_moveit_config = FindPackageShare(package=package_name_moveit_config).find(package_name_moveit_config)
  
     # Paths for various configuration files
-    srdf_file_path = 'config/mycobot_280.srdf'
+    srdf_file_path = 'config/panda.srdf'
     moveit_controllers_file_path = 'config/moveit_controllers.yaml'
     joint_limits_file_path = 'config/joint_limits.yaml'
     kinematics_file_path = 'config/kinematics.yaml'
@@ -36,6 +40,12 @@ def generate_launch_description():
     pilz_cartesian_limits_file_path = os.path.join(pkg_share_moveit_config, pilz_cartesian_limits_file_path)
     initial_positions_file_path = os.path.join(pkg_share_moveit_config, initial_positions_file_path)
     rviz_config_file = os.path.join(pkg_share_moveit_config, rviz_config_file_path)
+    print("SRDF Model Path:", srdf_model_path)
+    print("MoveIt Controllers File Path:", moveit_controllers_file_path)
+    print("Joint Limits File Path:", joint_limits_file_path)
+    print("Kinematics File Path:", kinematics_file_path)
+    print("Pilz_cartesian_limits:", pilz_cartesian_limits_file_path)
+    print("Initial positions File Path:", initial_positions_file_path)
     
     # Launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -56,13 +66,13 @@ def generate_launch_description():
     # Typically, you would also have this line in here: .robot_description(file_path=urdf_model_path)
     # Another launch file is launching the robot description.
     moveit_config = (
-        MoveItConfigsBuilder("mycobot_280", package_name=package_name_moveit_config)
+        MoveItConfigsBuilder("panda", package_name=package_name_moveit_config)
         .trajectory_execution(file_path=moveit_controllers_file_path)
         .robot_description_semantic(file_path=srdf_model_path)
         .joint_limits(file_path=joint_limits_file_path)
         .robot_description_kinematics(file_path=kinematics_file_path)
         .planning_pipelines(
-            pipelines=["ompl", "pilz_industrial_motion_planner", "stomp"],
+            pipelines=["ompl", "pilz_industrial_motion_planner"],
             default_planning_pipeline="pilz_industrial_motion_planner"
         )
         .planning_scene_monitor(

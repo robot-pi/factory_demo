@@ -1,7 +1,7 @@
 moveit_setup_assistant_config:
   URDF:
     package: robotpi_demo_robot_description
-    relative_path: urdf/arm/mycobot_280.urdf.xacro
+    relative_path: urdf/arm/mycobot280.urdf.xacro
     xacro_args: ""
   SRDF:
     relative_path: config/mycobot_280.srdf

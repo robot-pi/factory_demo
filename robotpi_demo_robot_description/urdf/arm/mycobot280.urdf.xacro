@@ -476,6 +476,37 @@
 		<mimic joint="gripper_controller" multiplier="1.0" offset="0" />
 	</joint>
 
+	<link name="random1"/>
+	<link name="random2"/>
+	<link name="random3"/>
+	<link name="random4"/>
+	<link name="random5"/>
+
+    <joint name="gripper_base_to_gripper_left2_mimic" type="fixed">
+        <parent link="world"/>
+        <child link="random1"/>
+    </joint>
+
+	<joint name="gripper_left3_to_gripper_left1_mimic" type="fixed">
+        <parent link="world"/>
+        <child link="random2"/>
+    </joint>
+
+	<joint name="gripper_base_to_gripper_right3_mimic" type="fixed">
+        <parent link="world"/>
+        <child link="random3"/>
+    </joint>
+
+	<joint name="gripper_base_to_gripper_right2_mimic" type="fixed">
+        <parent link="world"/>
+        <child link="random4"/>
+    </joint>
+
+	<joint name="gripper_right3_to_gripper_right1_mimic" type="fixed">
+        <parent link="world"/>
+        <child link="random5"/>
+    </joint>
+	
 	<gazebo reference="link1">
         <material>Gazebo/White</material>
     </gazebo>
@@ -498,6 +529,24 @@
         <material>Gazebo/White</material>
     </gazebo>
 	<gazebo reference="gripper_base">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_left1">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_left2">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_left3">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_right1">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_right2">
+        <material>Gazebo/White</material>
+    </gazebo>
+	<gazebo reference="gripper_right3">
         <material>Gazebo/White</material>
     </gazebo>
 

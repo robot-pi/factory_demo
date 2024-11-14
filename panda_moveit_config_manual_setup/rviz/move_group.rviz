@@ -1,13 +1,13 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /MotionPlanning1/Planning Request1
-      Splitter Ratio: 0.5
-    Tree Height: 771
+        - /Image1
+      Splitter Ratio: 0.6112224459648132
+    Tree Height: 634
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -65,98 +65,70 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          base_link:
+          end_effector_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_hand:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_base:
+          panda_leftfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left1:
+          panda_link0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left2:
+          panda_link1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left3:
+          panda_link2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right1:
+          panda_link3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right2:
+          panda_link4:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right3:
+          panda_link5:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link1:
+          panda_link6:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link2:
+          panda_link7:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link3:
+          panda_link8:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_rightfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link5:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6_flange:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          random1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random5:
+          random:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -178,98 +150,70 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
+        end_effector_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        panda_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_base:
+        panda_leftfinger:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_left1:
+        panda_link0:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_left2:
+        panda_link1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_left3:
+        panda_link2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_right1:
+        panda_link3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_right2:
+        panda_link4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_right3:
+        panda_link5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link1:
+        panda_link6:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link2:
+        panda_link7:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link3:
+        panda_link8:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        panda_rightfinger:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        link4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link6:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        link6_flange:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        random1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        random2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        random3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        random4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        random5:
+        random:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -321,98 +265,70 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          base_link:
+          end_effector_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_hand:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_base:
+          panda_leftfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left1:
+          panda_link0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left2:
+          panda_link1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left3:
+          panda_link2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right1:
+          panda_link3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right2:
+          panda_link4:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right3:
+          panda_link5:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link1:
+          panda_link6:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link2:
+          panda_link7:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link3:
+          panda_link8:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_rightfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link5:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6_flange:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          random1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random5:
+          random:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -443,7 +359,7 @@ Visualization Manager:
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: arm
+        Planning Group: panda_arm
         Query Goal State: false
         Query Start State: false
         Show Workspace: false
@@ -466,98 +382,70 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          base_link:
+          end_effector_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_hand:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_base:
+          panda_leftfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left1:
+          panda_link0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left2:
+          panda_link1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_left3:
+          panda_link2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right1:
+          panda_link3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right2:
+          panda_link4:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_right3:
+          panda_link5:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link1:
+          panda_link6:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link2:
+          panda_link7:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link3:
+          panda_link8:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          panda_rightfinger:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          link4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link5:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          link6_flange:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          random1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random4:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          random5:
+          random:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -582,10 +470,24 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /display_contacts
       Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rgb_camera/image_raw
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: panda_link0
     Frame Rate: 30
   Name: root
   Tools:
@@ -628,7 +530,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.5459766387939453
+      Distance: 3.8008623123168945
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -643,10 +545,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.17039810121059418
+      Pitch: 0.31539833545684814
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.963583469390869
+      Yaw: 2.8203961849212646
     Saved: ~
 Window Geometry:
   Displays:
@@ -654,11 +556,13 @@ Window Geometry:
   Height: 1043
   Hide Left Dock: false
   Hide Right Dock: false
+  Image:
+    collapsed: false
   MotionPlanning:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000002d7000003a3fc020000000dfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006600fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000048000003a3000000de00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005600fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005600fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670000000159000002300000020b00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006900000002fe000000ed0000005600ffffff0000000100000122000003a3fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000048000003a3000000c400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d006501000000000000045000000000000000000000037b000003a300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000001f5000003a3fc020000000efb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006600fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000048000002cc000000de00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005600fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005600fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670000000179000002160000020b00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000031c000000cf0000005600fffffffb0000000a0049006d006100670065010000031a000000d10000003200ffffff0000000100000122000003a3fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000048000003a3000000c400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d006501000000000000045000000000000000000000045d000003a300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Selection:
