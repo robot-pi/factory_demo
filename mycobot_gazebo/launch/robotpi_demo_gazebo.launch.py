@@ -11,6 +11,7 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import TimerAction
+from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
@@ -52,12 +53,15 @@ def generate_launch_description():
   roll = LaunchConfiguration('roll')
   pitch = LaunchConfiguration('pitch')
   yaw = LaunchConfiguration('yaw')
+
+  # Whether to use slam toolbox for mapping
   use_slam = LaunchConfiguration("use_slam")
 
   use_slam_arg = DeclareLaunchArgument(
         "use_slam",
         default_value="false"
   )
+
   # Declare the launch arguments  
   declare_robot_name_cmd = DeclareLaunchArgument(
     name='robot_name',
@@ -152,6 +156,16 @@ def generate_launch_description():
     PythonLaunchDescriptionSource(
       os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')),
     condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless])))
+
+  # Start the slam toolbox
+  slam = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("robotpi_demo_robot_slam"),
+            "launch",
+            "slam.launch.py"
+        ),
+        condition=IfCondition(use_slam)
+    )
     
   # Subscribe to the joint states of the robot, and publish the 3D pose of each link.
   robot_description_content = ParameterValue(Command(['xacro ', urdf_model]), value_type=str)
@@ -177,14 +191,32 @@ def generate_launch_description():
 
   # Launch RViz
   start_rviz_cmd = Node(
-    condition=IfCondition(use_rviz),
+    condition=IfCondition(
+      PythonExpression(
+        ["'", use_rviz, "' == 'true' and '", use_slam, "' == 'false'"])),
     package='rviz2',
     executable='rviz2',
     name='rviz2',
     output='screen',
     arguments=['-d', rviz_config_file],
     parameters=[{'use_sim_time': use_sim_time, }]
-    )  
+    )
+  
+  start_rviz_slam = Node(
+      condition=IfCondition(
+        PythonExpression(
+          ["'", use_rviz, "' == 'true' and '", use_slam, "' == 'true'"])),
+      package="rviz2",
+      executable="rviz2",
+      arguments=["-d", os.path.join(
+              get_package_share_directory("robotpi_demo_robot_slam"),
+              "rviz",
+              "mapping.rviz"
+          )
+      ],
+      output="screen",
+      parameters=[{"use_sim_time": True}],
+  )  
     
   # Spawn the robot
   start_gazebo_ros_spawner_cmd = Node(
@@ -201,7 +233,7 @@ def generate_launch_description():
       '-Y', yaw
       ],
     output='screen')  
-    
+  
   # Create the launch description and populate
   ld = LaunchDescription()
 
@@ -235,5 +267,9 @@ def generate_launch_description():
   
   ld.add_action(start_gazebo_ros_spawner_cmd)
   ld.add_action(TimerAction(period=5.0, actions=[start_rviz_cmd]))
+
+  ld.add_action(use_slam_arg)
+  ld.add_action(slam)
+  ld.add_action(start_rviz_slam)
 
   return ld
