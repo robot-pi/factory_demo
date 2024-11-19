@@ -40,13 +40,7 @@ def generate_launch_description():
     pilz_cartesian_limits_file_path = os.path.join(pkg_share_moveit_config, pilz_cartesian_limits_file_path)
     initial_positions_file_path = os.path.join(pkg_share_moveit_config, initial_positions_file_path)
     rviz_config_file = os.path.join(pkg_share_moveit_config, rviz_config_file_path)
-    print("SRDF Model Path:", srdf_model_path)
-    print("MoveIt Controllers File Path:", moveit_controllers_file_path)
-    print("Joint Limits File Path:", joint_limits_file_path)
-    print("Kinematics File Path:", kinematics_file_path)
-    print("Pilz_cartesian_limits:", pilz_cartesian_limits_file_path)
-    print("Initial positions File Path:", initial_positions_file_path)
-    
+
     # Launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time')
     use_rviz = LaunchConfiguration('use_rviz')

@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Image1
+        - /TF1/Frames1
       Splitter Ratio: 0.6112224459648132
     Tree Height: 634
   - Class: rviz_common/Selection
@@ -484,6 +484,68 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /rgb_camera/image_raw
       Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        end_effector_frame:
+          Value: false
+        panda_hand:
+          Value: false
+        panda_leftfinger:
+          Value: false
+        panda_link0:
+          Value: false
+        panda_link1:
+          Value: false
+        panda_link2:
+          Value: false
+        panda_link3:
+          Value: false
+        panda_link4:
+          Value: false
+        panda_link5:
+          Value: false
+        panda_link6:
+          Value: false
+        panda_link7:
+          Value: false
+        panda_link8:
+          Value: true
+        panda_rightfinger:
+          Value: false
+        random:
+          Value: false
+        world:
+          Value: false
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        world:
+          panda_link0:
+            panda_link1:
+              panda_link2:
+                panda_link3:
+                  panda_link4:
+                    panda_link5:
+                      panda_link6:
+                        panda_link7:
+                          end_effector_frame:
+                            {}
+                          panda_link8:
+                            panda_hand:
+                              panda_leftfinger:
+                                {}
+                              panda_rightfinger:
+                                {}
+          random:
+            {}
+      Update Interval: 0
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -545,10 +607,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.31539833545684814
+      Pitch: 0.9053980112075806
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.8203961849212646
+      Yaw: 6.233580112457275
     Saved: ~
 Window Geometry:
   Displays:

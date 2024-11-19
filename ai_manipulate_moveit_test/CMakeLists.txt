@@ -13,6 +13,8 @@ find_package(geometry_msgs REQUIRED)
 find_package(moveit_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(control_msgs REQUIRED)
+find_package(rclpy)
 
 # Function to add an executable with common settings
 function(add_common_executable target_name source_file)
@@ -24,27 +26,28 @@ function(add_common_executable target_name source_file)
   ament_target_dependencies(${target_name}
     moveit_ros_planning_interface
     rclcpp
+    control_msgs
   )
 endfunction()
 
 # Add executables
-add_common_executable(arm_manipulate arm_manipulate.cpp)
-add_common_executable(gripper_manipulate gripper_manipulate.cpp)
 add_common_executable(arm_manipulate_panda arm_manipulate_panda.cpp)
 add_common_executable(gripper_manipulate_panda gripper_manipulate_panda.cpp)
-add_common_executable(cartesian_manipulate cartesian_manipulate.cpp)
 add_common_executable(cartesian_manipulate_panda cartesian_manipulate_panda.cpp)
 add_common_executable(cv_to_moveit cv_to_moveit.cpp)
+add_common_executable(pose_input_panda pose_input_panda.cpp)
+add_common_executable(cartesian_path_command cartesian_path_command.cpp)
+add_common_executable(gripper_command_panda gripper_command_panda.cpp)
 
 # Install targets
 install(TARGETS 
-arm_manipulate
-gripper_manipulate
 arm_manipulate_panda
 gripper_manipulate_panda
-cartesian_manipulate
 cartesian_manipulate_panda
 cv_to_moveit
+pose_input_panda
+cartesian_path_command
+gripper_command_panda
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
