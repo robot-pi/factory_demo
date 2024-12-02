@@ -14,7 +14,8 @@ find_package(moveit_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
-find_package(rclpy)
+find_package(tf2_eigen REQUIRED)
+
 
 # Function to add an executable with common settings
 function(add_common_executable target_name source_file)
@@ -27,6 +28,7 @@ function(add_common_executable target_name source_file)
     moveit_ros_planning_interface
     rclcpp
     control_msgs
+    tf2_eigen
   )
 endfunction()
 

@@ -15,6 +15,15 @@ public:
 
     RCLCPP_INFO(get_logger(), "Initialized arm manipulation node.");
 
+    // Print all available groups and the current end-effector link
+  auto groups = arm_group_interface_.getJointModelGroupNames();
+  RCLCPP_INFO(get_logger(), "Available groups:");
+  for (const auto& group : groups) {
+    RCLCPP_INFO(get_logger(), "  - %s", group.c_str());
+  }
+
+  RCLCPP_INFO(get_logger(), "End Effector Link: %s", arm_group_interface_.getEndEffectorLink().c_str());
+
     // Create subscription to the "target_pose" topic
     target_pose_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>("target_pose", 10, std::bind(&ArmManipulationNode::poseCallback, this, std::placeholders::_1));
   }

@@ -141,7 +141,6 @@ def generate_launch_description():
       "/controller_manager"
     ]
   )  
-
   start_panda_hand_controller_cmd = Node(
     package="controller_manager",
     executable="spawner",
@@ -252,7 +251,7 @@ def generate_launch_description():
   # 4. 启动控制器，分别延迟启动以确保 robot_state_publisher 已初始化
   ld.add_action(TimerAction(period=5.0, actions=[start_panda_arm_controller_cmd]))
   ld.add_action(TimerAction(period=6.0, actions=[start_panda_hand_controller_cmd]))
-  ld.add_action(TimerAction(period=7.0, actions=[start_joint_state_broadcaster_cmd]))
+  ld.add_action(TimerAction(period=8.0, actions=[start_joint_state_broadcaster_cmd]))
 
   # 5. 启动机器人模型（spawn entity），延迟 2 秒以确保控制器已启动
   ld.add_action(TimerAction(period=10.0, actions=[start_gazebo_ros_spawner_cmd]))
