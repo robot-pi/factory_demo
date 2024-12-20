@@ -7,7 +7,7 @@
         </hardware>
 
         <joint name="panda_joint1">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -17,7 +17,7 @@
         </joint>
 
         <joint name="panda_joint2">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -31,7 +31,7 @@
         </joint>
 
         <joint name="panda_joint3">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -45,7 +45,7 @@
         </joint>
 
         <joint name="panda_joint4">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -59,7 +59,7 @@
         </joint>
 
         <joint name="panda_joint5">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -73,7 +73,7 @@
         </joint>
 
         <joint name="panda_joint6">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -87,7 +87,7 @@
         </joint>
 
         <joint name="panda_joint7">
-            <command_interface name="position"/>
+            <!-- <command_interface name="position"/> -->
             <command_interface name="effort">
               <param name="min">-500</param>
               <param name="max">500</param>
@@ -109,12 +109,10 @@
             <state_interface name="position">
               <param name="initial_value">0.0</param>
             </state_interface>
-            <state_interface name="effort">
-              <param name="initial_value">0.0</param>
-            </state_interface>
             <state_interface name="velocity">
               <param name="initial_value">0.0</param>
             </state_interface>
+            <state_interface name="effort"/>
             <dynamics damping="0.2" friction="0.1"/>
         </joint>
         
@@ -129,12 +127,10 @@
           <state_interface name="position">
             <param name="initial_value">0.0</param>
           </state_interface>
-          <state_interface name="effort">
-            <param name="initial_value">0.0</param>
-          </state_interface>
           <state_interface name="velocity">
             <param name="initial_value">0.0</param>
           </state_interface>
+          <state_interface name="effort"/>
           <dynamics damping="0.2" friction="0.1"/>
         </joint>
         

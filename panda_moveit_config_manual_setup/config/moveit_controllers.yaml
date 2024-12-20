@@ -26,8 +26,8 @@ moveit_simple_controller_manager:
       - panda_joint7
 
   panda_hand_controller:
-    type: GripperCommand
-    action_ns: gripper_cmd
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
     default: true
     joints:
       - panda_finger_joint1
