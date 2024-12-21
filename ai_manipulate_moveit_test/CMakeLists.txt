@@ -13,9 +13,28 @@ find_package(geometry_msgs REQUIRED)
 find_package(moveit_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(rclpy)
+find_package(ament_cmake REQUIRED)
+find_package(generate_parameter_library REQUIRED)
+find_package(moveit_common REQUIRED)
+find_package(moveit_core REQUIRED)
+find_package(moveit_ros_planning REQUIRED)
+find_package(moveit_task_constructor_core REQUIRED)
+find_package(moveit_task_constructor_msgs REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(tf2_eigen REQUIRED)
 
+set(THIS_PACKAGE_INCLUDE_DEPENDS
+  moveit_core
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  moveit_task_constructor_core
+  moveit_task_constructor_msgs
+  rclcpp
+  tf2_eigen
+)
 # Function to add an executable with common settings
 function(add_common_executable target_name source_file)
   add_executable(${target_name} src/${source_file})
@@ -27,6 +46,11 @@ function(add_common_executable target_name source_file)
     moveit_ros_planning_interface
     rclcpp
     control_msgs
+    moveit_core
+    moveit_ros_planning
+    moveit_ros_planning_interface
+    moveit_task_constructor_core
+    moveit_task_constructor_msgs
   )
 endfunction()
 
@@ -38,6 +62,7 @@ add_common_executable(cv_to_moveit cv_to_moveit.cpp)
 add_common_executable(pose_input_panda pose_input_panda.cpp)
 add_common_executable(cartesian_path_command cartesian_path_command.cpp)
 add_common_executable(gripper_command_panda gripper_command_panda.cpp)
+add_common_executable(mtc_pick_and_place mtc_pick_and_place.cpp)
 
 # Install targets
 install(TARGETS 
@@ -48,7 +73,13 @@ cv_to_moveit
 pose_input_panda
 cartesian_path_command
 gripper_command_panda
+mtc_pick_and_place
   DESTINATION lib/${PROJECT_NAME})
+
+# Install directories
+install(DIRECTORY config launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

@@ -18,7 +18,7 @@ def generate_launch_description():
   urdf_file_path = 'urdf/arm/panda.urdf.xacro' #'urdf/lite/car_lite.urdf.xacro' #'urdf/car.urdf.xacro' #'urdf/arm/mycobot280.urdf.xacro' #'urdf/arm/panda.urdf.xacro'
   gazebo_launch_file_path = 'launch'
   gazebo_models_path = 'models/factory'#factory
-  world_file_path = 'worlds/burger_assemble.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world burger_assemble
+  world_file_path = 'worlds/burger_assemble_with_block.world'#'world/house_classic.world'#'world/factory.world'# world/empty_classic.world burger_assemble
   default_robot_name = 'panda' #'mycobot_280' #'car' #'panda'
 
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros') 
