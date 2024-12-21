@@ -390,6 +390,8 @@ mtc::Task MTCTaskNode::createTask()
   std::string ompl_planner_arm_name = "ompl";
   auto ompl_planner_arm = std::make_shared<mtc::solvers::PipelinePlanner>(
     this->shared_from_this(), ompl_planner_arm_name);
+  ompl_planner_arm->setPlannerId("RRTConnectkConfigDefault");
+
   RCLCPP_INFO(this->get_logger(), "OMPL planner created for the arm group");
 
   // JointInterpolation is a basic planner that is used for simple motions 
@@ -461,161 +463,170 @@ mtc::Task MTCTaskNode::createTask()
   // By declaring it at the top level of the function, it can be accessed throughout 
   // the entire task creation process. 
   // This allows different parts of the code to use and modify this pointer.
-//   mtc::Stage* attach_object_stage =
-//       nullptr;  // Forward attach_object_stage to place pose generator 
+  mtc::Stage* attach_object_stage =
+      nullptr;  // Forward attach_object_stage to place pose generator 
 	  
-//   /****************************************************
-//    *                                                  *
-//    *               Pick Object                        *
-//    *                                                  *
-//    ***************************************************/
-//   {
-//     // Create a serial container for the grasping action
-//     // This container will hold stages (in order) that will accomplish the picking action
-//     auto grasp = std::make_unique<mtc::SerialContainer>("pick object");
-//     task.properties().exposeTo(grasp->properties(), { "eef", "group", "ik_frame" });
-//     grasp->properties().configureInitFrom(mtc::Stage::PARENT,
-//                                         { "eef", "group", "ik_frame" });
+  /****************************************************
+   *                                                  *
+   *               Pick Object                        *
+   *                                                  *
+   ***************************************************/
+  {
+    // Create a serial container for the grasping action
+    // This container will hold stages (in order) that will accomplish the picking action
+    auto grasp = std::make_unique<mtc::SerialContainer>("pick object");
+    task.properties().exposeTo(grasp->properties(), { "eef", "group", "ik_frame" });
+    grasp->properties().configureInitFrom(mtc::Stage::PARENT,
+                                        { "eef", "group", "ik_frame" });
 
-//     /****************************************************
-// ---- *               Approach Object                    *
-//      ***************************************************/
-//     {
-//       // Create a stage for moving the gripper close to the object before trying to grab it.	
-//       // We are doing a movement that is relative to our current position.	
-//       // Cartesian planner will move the gripper in a straight line	  
-//       auto stage =
-//         std::make_unique<mtc::stages::MoveRelative>("approach object", cartesian_planner); 
+    /****************************************************
+---- *               Approach Object                    *
+     ***************************************************/
+    {
+      // Create a stage for moving the gripper close to the object before trying to grab it.	
+      // We are doing a movement that is relative to our current position.	
+      // Cartesian planner will move the gripper in a straight line	  
+      auto stage =
+        std::make_unique<mtc::stages::MoveRelative>("approach object", cartesian_planner); 
   
-//       // Set properties for visualization and planning
-//       stage->properties().set("marker_ns", "approach_object"); // Namespace for visualization markers
-//       stage->properties().set("link", gripper_frame); // The link to move (end effector)
-//       stage->properties().set("trajectory_execution_info",
-//                       mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
-//       stage->properties().configureInitFrom(mtc::Stage::PARENT, { "group" }); // Inherit the 'group' property
-//       stage->setMinMaxDistance(approach_object_min_dist, approach_object_max_dist);
+      // Set properties for visualization and planning
+      stage->properties().set("marker_ns", "approach_object"); // Namespace for visualization markers
+      stage->properties().set("link", gripper_frame); // The link to move (end effector)
+      stage->properties().set("trajectory_execution_info",
+                      mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
+      stage->properties().configureInitFrom(mtc::Stage::PARENT, { "group" }); // Inherit the 'group' property
+      stage->setMinMaxDistance(approach_object_min_dist, approach_object_max_dist);
 
-//       // Define the direction that we want the gripper to move (i.e. z direction) from the gripper frame
-//       geometry_msgs::msg::Vector3Stamped vec;
-//       vec.header.frame_id = gripper_frame; // Set the frame for the vector
-//       vec.vector.z = approach_object_direction_z; // Set the direction (in this case, along the z-axis of the gripper frame)
-//       stage->setDirection(vec);
-//       grasp->insert(std::move(stage));
-// 	}
+      // Define the direction that we want the gripper to move (i.e. z direction) from the gripper frame
+      geometry_msgs::msg::Vector3Stamped vec;
+      vec.header.frame_id = gripper_frame; // Set the frame for the vector
+      vec.vector.z = approach_object_direction_z; // Set the direction (in this case, along the z-axis of the gripper frame)
+      stage->setDirection(vec);
+      RCLCPP_INFO(this->get_logger(), "Starting 'approach object' stage...");
+      grasp->insert(std::move(stage));
+	}
 	
-//     /****************************************************
-// ---- *               Generate Grasp Pose               *
-//      ***************************************************/
-// 	{
-// 	  // Generate the grasp pose
-// 	  // This is the stage for computing how the robot should grab the object
-// 	  // This stage is a generator stage because it doesn't need information from
-// 	  // stages before or after it.
-// 	  // When generating solutions, MTC will try to grab the object from many different orientations.
-//       // Sample grasp pose candidates in angle increments around the z-axis of the object
+    /****************************************************
+---- *               Generate Grasp Pose               *
+     ***************************************************/
+	{
+	  // Generate the grasp pose
+	  // This is the stage for computing how the robot should grab the object
+	  // This stage is a generator stage because it doesn't need information from
+	  // stages before or after it.
+	  // When generating solutions, MTC will try to grab the object from many different orientations.
+      // Sample grasp pose candidates in angle increments around the z-axis of the object
 	  
-//       auto stage = std::make_unique<mtc::stages::GenerateGraspPose>("generate grasp pose");
-//       stage->properties().configureInitFrom(mtc::Stage::PARENT);
-//       stage->properties().set("marker_ns", "grasp_pose");
-//       stage->setPreGraspPose(gripper_open_pose);
-//       stage->setObject(object_name);
-//       stage->setAngleDelta(grasp_pose_angle_delta); //  Angular resolution for sampling grasp poses around the object
-//       stage->setMonitoredStage(current_state_ptr);  // Ensure grasp poses are valid given the initial configuration of the robot 
+      auto stage = std::make_unique<mtc::stages::GenerateGraspPose>("generate grasp pose");
+      stage->properties().configureInitFrom(mtc::Stage::PARENT);
+      stage->properties().set("marker_ns", "grasp_pose");
+      stage->setPreGraspPose(gripper_open_pose);
+      stage->setObject(object_name);
+      stage->setAngleDelta(grasp_pose_angle_delta); //  Angular resolution for sampling grasp poses around the object
+      stage->setMonitoredStage(current_state_ptr);  // Ensure grasp poses are valid given the initial configuration of the robot 
 
-//       // Compute IK for sampled grasp poses  
-//       auto wrapper = std::make_unique<mtc::stages::ComputeIK>("grasp pose IK", std::move(stage));
-//       wrapper->setMaxIKSolutions(grasp_pose_max_ik_solutions);
-//       wrapper->setMinSolutionDistance(grasp_pose_min_solution_distance);
-//       wrapper->setIKFrame(vectorToEigen(grasp_frame_transform), gripper_frame); // Transform from gripper frame to tool center point (TCP)
-//       wrapper->properties().configureInitFrom(mtc::Stage::PARENT, { "eef", "group" });
-//       wrapper->properties().configureInitFrom(mtc::Stage::INTERFACE, { "target_pose" });
-//       grasp->insert(std::move(wrapper));
-//     }
+      // Compute IK for sampled grasp poses  
+      auto wrapper = std::make_unique<mtc::stages::ComputeIK>("grasp pose IK", std::move(stage));
+      wrapper->setMaxIKSolutions(grasp_pose_max_ik_solutions);
+      wrapper->setMinSolutionDistance(grasp_pose_min_solution_distance);
+      wrapper->setIKFrame(vectorToEigen(grasp_frame_transform), gripper_frame); // Transform from gripper frame to tool center point (TCP)
+      wrapper->properties().configureInitFrom(mtc::Stage::PARENT, { "eef", "group" });
+      wrapper->properties().configureInitFrom(mtc::Stage::INTERFACE, { "target_pose" });
+      RCLCPP_INFO(this->get_logger(), "Starting 'generate grasp pose' stage...");
+      grasp->insert(std::move(wrapper));
+    }
 
-//     /****************************************************
-// ---- *            Allow Collision (gripper,  object)   *
-//      ***************************************************/
-//     {
-//       // Modify planning scene (w/o altering the robot's pose) to allow touching the object for picking
-//       auto stage =
-//         std::make_unique<mtc::stages::ModifyPlanningScene>("allow collision (gripper,object)");
-//       stage->allowCollisions(
-//         object_name,
-//         task.getRobotModel()
-//         ->getJointModelGroup(gripper_group_name)
-//         ->getLinkModelNamesWithCollisionGeometry(),
-//         true);
-//       grasp->insert(std::move(stage));
-//     }
+    /****************************************************
+---- *            Allow Collision (gripper,  object)   *
+     ***************************************************/
+    {
+      // Modify planning scene (w/o altering the robot's pose) to allow touching the object for picking
+      auto stage =
+        std::make_unique<mtc::stages::ModifyPlanningScene>("allow collision (gripper,object)");
+      stage->allowCollisions(
+        object_name,
+        task.getRobotModel()
+        ->getJointModelGroup(gripper_group_name)
+        ->getLinkModelNamesWithCollisionGeometry(),
+        true);
+      RCLCPP_INFO(this->get_logger(), "Starting 'allow collision (gripper,object)' stage...");
+      grasp->insert(std::move(stage));
+    }
 	
-//     /****************************************************
-// ---- *               Close Gripper                     *
-//      ***************************************************/
-//     {
+    /****************************************************
+---- *               Close Gripper                     *
+     ***************************************************/
+    {
 
-//       auto stage = std::make_unique<mtc::stages::MoveTo>("close gripper", interpolation_planner);
-//       stage->setGroup(gripper_group_name);
-//       stage->setGoal(gripper_close_pose);
-//       stage->properties().set("trajectory_execution_info",
-//                       mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
-//       grasp->insert(std::move(stage));
-//     }
+      auto stage = std::make_unique<mtc::stages::MoveTo>("close gripper", interpolation_planner);
+      stage->setGroup(gripper_group_name);
+      stage->setGoal(gripper_close_pose);
+      stage->properties().set("trajectory_execution_info",
+                      mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
+      RCLCPP_INFO(this->get_logger(), "Starting 'close gripper' stage...");
+      grasp->insert(std::move(stage));
+    }
 	
-//     /****************************************************
-// ---- *               Attach Object                     *
-//      ***************************************************/
-//     {  
-//        auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("attach object");
-//        stage->attachObject(object_name, gripper_frame);  // attach object to gripper_frame
-//        attach_object_stage = stage.get();
-//        grasp->insert(std::move(stage));
-//     }
+    /****************************************************
+---- *               Attach Object                     *
+     ***************************************************/
+    {  
+       auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("attach object");
+       stage->attachObject(object_name, gripper_frame);  // attach object to gripper_frame
+       attach_object_stage = stage.get();
+      RCLCPP_INFO(this->get_logger(), "Starting 'attach object' stage...");
+       grasp->insert(std::move(stage));
+    }
 	
-//     /****************************************************
-// ---- *       Allow collision (object,  surface)        *
-//      ***************************************************/
-//     {
-//       // Allows the planner to generate valid trajectories where the object remains in contact 
-//       // with the support surface until it's lifted.
-//       auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("allow collision (object,support)");
-//       stage->allowCollisions({ object_name }, {table_name}, true);
-//       grasp->insert(std::move(stage));
-//     }
-//     /****************************************************
-// ---- *       Lift object                               *
-//      ***************************************************/
-//     {
-//       auto stage = std::make_unique<mtc::stages::MoveRelative>("lift object", cartesian_planner);
-//       stage->properties().configureInitFrom(mtc::Stage::PARENT, { "group" });
-//       stage->setMinMaxDistance(lift_object_min_dist, lift_object_max_dist);
-//       stage->setIKFrame(gripper_frame);
-//       stage->properties().set("marker_ns", "lift_object");
-//       stage->properties().set("trajectory_execution_info",
-//                       mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
+    /****************************************************
+---- *       Allow collision (object,  surface)        *
+     ***************************************************/
+    {
+      // Allows the planner to generate valid trajectories where the object remains in contact 
+      // with the support surface until it's lifted.
+      auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("allow collision (object,support)");
+      stage->allowCollisions({ object_name }, {table_name}, true);
+      RCLCPP_INFO(this->get_logger(), "Starting 'allow collision (object,support)' stage...");
+      grasp->insert(std::move(stage));
+    }
+    /****************************************************
+---- *       Lift object                               *
+     ***************************************************/
+    {
+      auto stage = std::make_unique<mtc::stages::MoveRelative>("lift object", cartesian_planner);
+      stage->properties().configureInitFrom(mtc::Stage::PARENT, { "group" });
+      stage->setMinMaxDistance(lift_object_min_dist, lift_object_max_dist);
+      stage->setIKFrame(gripper_frame);
+      stage->properties().set("marker_ns", "lift_object");
+      stage->properties().set("trajectory_execution_info",
+                      mtc::TrajectoryExecutionInfo().set__controller_names(controller_names));
 					  
-//       // We're defining the direction to lift the object
-//       geometry_msgs::msg::Vector3Stamped vec;
-//       vec.header.frame_id = world_frame;
-//       vec.vector.z = lift_object_direction_z;  // This means "straight up" 
-//       stage->setDirection(vec);
-//       grasp->insert(std::move(stage));
-//     }
-//     /****************************************************
-// ---- *       Forbid collision (object, surface)*       *
-//      ***************************************************/
-//     {
-//       // Forbid collisions between the picked object and the support surface. 
-//       // This is important after the object has been lifted to ensure it doesn't accidentally 
-//       // collide with the surface during subsequent movements.
-//       auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("forbid collision (object,surface)");
-//       stage->allowCollisions({ object_name }, {table_name}, false);
-//       grasp->insert(std::move(stage));      
-// 	}	 
-// 	// Add the serial container to the robot's to-do list
-// 	// This serial container contains all the sequential steps we've created for grasping
-// 	// and lifting the object 
-// 	task.add(std::move(grasp));
-//   }
+      // We're defining the direction to lift the object
+      geometry_msgs::msg::Vector3Stamped vec;
+      vec.header.frame_id = world_frame;
+      vec.vector.z = lift_object_direction_z;  // This means "straight up" 
+      stage->setDirection(vec);
+      RCLCPP_INFO(this->get_logger(), "Starting 'lift object' stage...");
+      grasp->insert(std::move(stage));
+    }
+    /****************************************************
+---- *       Forbid collision (object, surface)*       *
+     ***************************************************/
+    {
+      // Forbid collisions between the picked object and the support surface. 
+      // This is important after the object has been lifted to ensure it doesn't accidentally 
+      // collide with the surface during subsequent movements.
+      auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("forbid collision (object,surface)");
+      // stage->allowCollisions({ object_name }, {table_name}, false);
+      stage->allowCollisions({ object_name }, {table_name}, false);
+      RCLCPP_INFO(this->get_logger(), "Starting 'forbid collision (object,surface)' stage...");
+      grasp->insert(std::move(stage));      
+	}	 
+	// Add the serial container to the robot's to-do list
+	// This serial container contains all the sequential steps we've created for grasping
+	// and lifting the object 
+	task.add(std::move(grasp));
+  }
 //   /******************************************************
 //    *                                                    *
 //    *          Move to Place                             *
