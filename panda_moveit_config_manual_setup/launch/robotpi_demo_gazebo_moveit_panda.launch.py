@@ -77,7 +77,8 @@ def generate_launch_description():
         .pilz_cartesian_limits(file_path=pilz_cartesian_limits_file_path)
         .to_moveit_configs()
     )
-
+    # Load  ExecuteTaskSolutionCapability so we can execute found solutions in simulation
+    move_group_capabilities = {"capabilities": "move_group/ExecuteTaskSolutionCapability"}
     # Start the actual move_group node/action server
     start_move_group_node_cmd = Node(
         package="moveit_ros_move_group",
@@ -87,6 +88,7 @@ def generate_launch_description():
             moveit_config.to_dict(),
             {'use_sim_time': use_sim_time},
             {'start_state': {'content': initial_positions_file_path}},
+            move_group_capabilities,
         ],
     )
     # RViz

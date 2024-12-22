@@ -13,10 +13,8 @@ def generate_launch_description():
  
     # Set the path to different files and folders
     pkg_share_moveit_config = FindPackageShare(package=package_name_moveit_config).find(package_name_moveit_config)
-    
     package_name_mtc = 'ai_manipulate_moveit_test'
     pkg_share_mtc = FindPackageShare(package=package_name_mtc).find(package_name_mtc)
-
 
     # Paths for various configuration files
     srdf_file_path = 'config/panda.srdf'
@@ -49,9 +47,9 @@ def generate_launch_description():
 
     declare_exe_cmd = DeclareLaunchArgument(
         name="exe",
-        default_value="mtc_pick_and_place",
+        default_value="mtc_pick_and_place_cube",
         description="Which demo to run",
-        choices=["mtc_pick_and_place"])
+        choices=["mtc_pick_and_place_test", "mtc_pick_and_place_cube"])
   
     # Load the robot configuration
     # Typically, you would also have this line in here: .robot_description(file_path=urdf_model_path)
@@ -74,20 +72,15 @@ def generate_launch_description():
         )
         .to_moveit_configs()
     )
-    
+
     node = Node(
         package=package_name_mtc,
         executable=exe,
         output="screen",
         parameters=[
-            moveit_config.robot_description,
-            moveit_config.robot_description_semantic,
-            moveit_config.robot_description_kinematics,
-            moveit_config.joint_limits,
-            moveit_config.pilz_cartesian_limits,
-            moveit_config.planning_pipelines,
+            moveit_config.to_dict(),
             {'use_sim_time': use_sim_time},
-            mtc_node_params_file_path,
+            mtc_node_params_file_path
         ],
     )
 

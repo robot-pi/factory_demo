@@ -16,14 +16,12 @@ find_package(std_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(rclpy)
-find_package(ament_cmake REQUIRED)
 find_package(generate_parameter_library REQUIRED)
 find_package(moveit_common REQUIRED)
 find_package(moveit_core REQUIRED)
 find_package(moveit_ros_planning REQUIRED)
 find_package(moveit_task_constructor_core REQUIRED)
 find_package(moveit_task_constructor_msgs REQUIRED)
-find_package(rclcpp REQUIRED)
 find_package(tf2_eigen REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
@@ -62,8 +60,8 @@ add_common_executable(cv_to_moveit cv_to_moveit.cpp)
 add_common_executable(pose_input_panda pose_input_panda.cpp)
 add_common_executable(cartesian_path_command cartesian_path_command.cpp)
 add_common_executable(gripper_command_panda gripper_command_panda.cpp)
-add_common_executable(mtc_pick_and_place mtc_pick_and_place.cpp)
-
+add_common_executable(mtc_pick_and_place_test mtc_pick_and_place_test.cpp)
+add_common_executable(mtc_pick_and_place_cube mtc_pick_and_place_cube.cpp)
 # Install targets
 install(TARGETS 
 arm_manipulate_panda
@@ -73,7 +71,8 @@ cv_to_moveit
 pose_input_panda
 cartesian_path_command
 gripper_command_panda
-mtc_pick_and_place
+mtc_pick_and_place_test
+mtc_pick_and_place_cube
   DESTINATION lib/${PROJECT_NAME})
 
 # Install directories
