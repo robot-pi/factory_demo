@@ -131,6 +131,16 @@ def generate_launch_description():
   set_env_vars_resources = AppendEnvironmentVariable(
     'GAZEBO_MODEL_PATH',
     gazebo_models_path)
+  
+
+  # Static TF
+  static_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="static_transform_publisher",
+        output="log",
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
+    )
 
   start_panda_arm_controller_cmd = Node(
     package="controller_manager",
@@ -243,6 +253,7 @@ def generate_launch_description():
   ld.add_action(set_env_vars_resources)
 
   # 2. 启动 Gazebo 服务器和客户端
+  ld.add_action(static_tf)
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(TimerAction(period=3.0, actions=[start_gazebo_client_cmd]))
 

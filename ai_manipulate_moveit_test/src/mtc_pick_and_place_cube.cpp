@@ -157,10 +157,10 @@ MTCTaskNode::MTCTaskNode(const rclcpp::NodeOptions& options)
     declare_parameter("cartesian_step_size", 0.00025, "Step size for Cartesian planner");
 
     // Direction vector parameters
-    declare_parameter("approach_object_direction_z", 1.0, "Z component of approach object direction vector");
-    declare_parameter("lift_object_direction_z", 1.0, "Z component of lift object direction vector");
-    declare_parameter("lower_object_direction_z", -1.0, "Z component of lower object direction vector");
-    declare_parameter("retreat_direction_z", -1.0, "Z component of retreat direction vector");
+    declare_parameter("approach_object_direction", std::vector<double>{0.0, 0.0, 1.0}, "Direction of approach object direction vector");
+    declare_parameter("lift_object_direction", std::vector<double>{0.0, 0.0, 1.0}, "Direction of lift object direction vector");
+    declare_parameter("lower_object_direction", std::vector<double>{0.0, 0.0, -1.0}, "Direction of lower object direction vector");
+    declare_parameter("retreat_direction", std::vector<double>{0.0, 0.0, -1.0}, "Direction of retreat direction vector");
 
     // Other parameters
     declare_parameter("place_pose_z_offset_factor", 0.5, "Factor to multiply object height for place pose Z offset");
@@ -273,13 +273,13 @@ void MTCTaskNode::doTask()
 
     RCLCPP_INFO(this->get_logger(), "Task planning succeeded");
 
-    // Publish the planned solution for visualization
+    // The planned solution for visualization in Rviz
     task_.introspection().publishSolution(*task_.solutions().front());
     RCLCPP_INFO(this->get_logger(), "Published solution for visualization");
 
     if (execute)
     {
-        // Execute the planned task
+        // Execute the planned task, this will move the robot for robot in Rviz/Gazebo
         RCLCPP_INFO(this->get_logger(), "Executing the planned task");
         auto result = task_.execute(*task_.solutions().front());
         if (result.val != moveit_msgs::msg::MoveItErrorCodes::SUCCESS)
@@ -372,10 +372,10 @@ mtc::Task MTCTaskNode::createTask()
     auto cartesian_step_size = this->get_parameter("cartesian_step_size").as_double();
 
     // Direction vector parameters
-    auto approach_object_direction_z = this->get_parameter("approach_object_direction_z").as_double();
-    auto lift_object_direction_z = this->get_parameter("lift_object_direction_z").as_double();
-    auto lower_object_direction_z = this->get_parameter("lower_object_direction_z").as_double();
-    auto retreat_direction_z = this->get_parameter("retreat_direction_z").as_double();
+    auto approach_object_direction = this->get_parameter("approach_object_direction").as_double_array();
+    auto lift_object_direction = this->get_parameter("lift_object_direction").as_double_array();
+    auto lower_object_direction = this->get_parameter("lower_object_direction").as_double_array();
+    auto retreat_direction = this->get_parameter("retreat_direction").as_double_array();
 
     // Other parameters
     auto place_pose_z_offset_factor = this->get_parameter("place_pose_z_offset_factor").as_double();
@@ -501,7 +501,9 @@ mtc::Task MTCTaskNode::createTask()
         // Define the direction that we want the gripper to move (i.e. z direction) from the gripper frame
         geometry_msgs::msg::Vector3Stamped vec;
         vec.header.frame_id = gripper_frame; // Set the frame for the vector
-        vec.vector.z = approach_object_direction_z; // Set the direction (in this case, along the z-axis of the gripper frame)
+        vec.vector.x = approach_object_direction[0]; // Set the direction (in this case, along the z-axis of the gripper frame)
+        vec.vector.y = approach_object_direction[1];
+        vec.vector.z = approach_object_direction[2];
         stage->setDirection(vec);
         RCLCPP_INFO(this->get_logger(), "Starting 'approach object' stage...");
         grasp->insert(std::move(stage));
@@ -605,7 +607,9 @@ mtc::Task MTCTaskNode::createTask()
         // We're defining the direction to lift the object
         geometry_msgs::msg::Vector3Stamped vec;
         vec.header.frame_id = world_frame;
-        vec.vector.z = lift_object_direction_z;  // This means "straight up" 
+        vec.vector.x = lift_object_direction[0];  // This means "straight up" in z direction
+        vec.vector.y = lift_object_direction[1];
+        vec.vector.z = lift_object_direction[2];
         stage->setDirection(vec);
         RCLCPP_INFO(this->get_logger(), "Starting 'lift object' stage...");
         grasp->insert(std::move(stage));
@@ -674,7 +678,9 @@ mtc::Task MTCTaskNode::createTask()
         // Set downward direction
         geometry_msgs::msg::Vector3Stamped vec;
         vec.header.frame_id = world_frame;
-        vec.vector.z = lower_object_direction_z;
+        vec.vector.x = lower_object_direction[0];
+        vec.vector.y = lower_object_direction[1];
+        vec.vector.z = lower_object_direction[2];
         stage->setDirection(vec);
         place->insert(std::move(stage));
         }
@@ -751,7 +757,9 @@ mtc::Task MTCTaskNode::createTask()
         stage->properties().set("marker_ns", "retreat");
         geometry_msgs::msg::Vector3Stamped vec;
         vec.header.frame_id = gripper_frame;
-        vec.vector.z = retreat_direction_z;
+        vec.vector.x = retreat_direction[0];
+        vec.vector.y = retreat_direction[1];
+        vec.vector.z = retreat_direction[2];
         stage->setDirection(vec);
         place->insert(std::move(stage));
         }
@@ -796,7 +804,11 @@ int main(int argc, char** argv)
 
     // Set up a multi-threaded executor
     rclcpp::executors::MultiThreadedExecutor executor;
-    executor.add_node(mtc_task_node);
+    auto spin_thread = std::make_unique<std::thread>([&executor, &mtc_task_node]() {
+      executor.add_node(mtc_task_node->get_node_base_interface());
+      executor.spin();
+      executor.remove_node(mtc_task_node->get_node_base_interface());
+    });
 
     // Set up the planning scene and execute the task
     try {
@@ -809,9 +821,7 @@ int main(int argc, char** argv)
         RCLCPP_ERROR(mtc_task_node->get_logger(), "An error occurred: %s", e.what());
     }
 
-    // Keep the node running until Ctrl+C is pressed
-    executor.spin();
-
+    spin_thread->join();
     // Cleanup
     rclcpp::shutdown();
 

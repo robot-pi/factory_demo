@@ -1,7 +1,7 @@
 mtc_node:
   ros__parameters:
     # General parameters
-    execute: false
+    execute: true
     max_solutions: 10
     spawn_table: false
 
@@ -34,9 +34,9 @@ mtc_node:
     object_pose: [0.3, -0.5, 0.0, 0.0, 0.0, 0.0, 1.0]
 
     # Grasp and place parameters
-    grasp_frame_transform: [0.0,0.0,0.1,1.5708,1.5708,1.5708]
-    place_pose: [0.4, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0]
-    place_surface_offset: -0.03
+    grasp_frame_transform: [0.0, 0.0, 0.103, 3.142, -1.571, -0.000]
+    place_pose: [0.3, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0]
+    place_surface_offset: 0.025
 
     # Motion planning parameters
     approach_object_min_dist: 0.0015
@@ -51,7 +51,8 @@ mtc_node:
     move_to_place_timeout: 10.0
 
     # Grasp generation parameters
-    grasp_pose_angle_delta: 0.2618  # Approximately pi/12 in radians
+    #grasp_pose_angle_delta: 0.2618  # Approximately pi/12 in radians
+    grasp_pose_angle_delta: 1.5708  # Approximately pi/2 in radians 
     grasp_pose_max_ik_solutions: 8
     grasp_pose_min_solution_distance: 1.0
 
@@ -64,10 +65,10 @@ mtc_node:
     cartesian_step_size: 0.00025
 
     # Direction vector parameters
-    approach_object_direction_z: 1.0
-    lift_object_direction_z: 1.0
-    lower_object_direction_z: -1.0
-    retreat_direction_z: -1.0
+    approach_object_direction: [0.0, 1.0, 0.0]
+    lift_object_direction: [0.0, 0.0, 1.0]
+    lower_object_direction: [0.0, 0.0, -1.0]
+    retreat_direction: [-1.0, 0.0, 0.0]
 
     # Other parameters
     place_pose_z_offset_factor: 0.5

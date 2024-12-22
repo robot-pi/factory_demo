@@ -85,7 +85,7 @@ void MTCTaskNode::doTask()
     return;
   }
   task_.introspection().publishSolution(*task_.solutions().front());
-
+  
   auto result = task_.execute(*task_.solutions().front());
   if (result.val != moveit_msgs::msg::MoveItErrorCodes::SUCCESS)
   {
