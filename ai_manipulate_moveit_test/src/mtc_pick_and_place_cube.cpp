@@ -519,12 +519,43 @@ mtc::Task MTCTaskNode::createTask()
         // stages before or after it.
         // When generating solutions, MTC will try to grab the object from many different orientations.
         // Sample grasp pose candidates in angle increments around the z-axis of the object
-        
+        // auto stage = std::make_unique<mtc::stages::GeneratePose>("generate grasp pose"); // This required using action pre grasp pose including arm and gripper
         auto stage = std::make_unique<mtc::stages::GenerateGraspPose>("generate grasp pose");
         stage->properties().configureInitFrom(mtc::Stage::PARENT);
         stage->properties().set("marker_ns", "grasp_pose");
+        // Get the robot model
+        const moveit::core::RobotModelConstPtr& robot_model = task.getRobotModel();
+        if (!robot_model) {
+            RCLCPP_ERROR(this->get_logger(), "Robot model is not loaded properly. Initialization failed.");
+        }
+        else {
+            RCLCPP_INFO(this->get_logger(), "Robot model loaded successfully.");
+        }
+        /** Used when type is mtc::stages::GeneratePose  */
+        // moveit::core::RobotState robot_state(robot_model);
+
+        // // Set the robot state to the pre-grasp pose
+        // robot_state.setToDefaultValues(robot_state.getJointModelGroup(gripper_group_name), gripper_open_pose);
+
+        // // Retrieve the pose of the gripper
+        // const Eigen::Isometry3d& gripper_pose = robot_state.getGlobalLinkTransform(gripper_frame);
+
+        // // Modify the z-coordinate
+        // Eigen::Isometry3d modified_gripper_pose = gripper_pose;
+        // // modified_gripper_pose.translation().z() += 0.005; // Add 0.05 meters to the z-direction
+
+        // // Convert Eigen::Isometry3d to geometry_msgs::Pose
+        // geometry_msgs::msg::PoseStamped modified_pre_grasp_pose;
+        // modified_pre_grasp_pose.header.frame_id = world_frame; // Replace with your desired frame
+        // modified_pre_grasp_pose.pose = tf2::toMsg(modified_gripper_pose);
+
+        // Use the modified pose in the task
+        // stage->setPose(modified_pre_grasp_pose);
+
         stage->setPreGraspPose(gripper_open_pose);
         stage->setObject(object_name);
+        Eigen::Vector3d rotation_axis(0.0, 1.0, 0.0); // Y-axis of gripper, in this case going upward using the frame of the object
+        stage->setRotationAxis(rotation_axis); // Rotate around the Y-axis
         stage->setAngleDelta(grasp_pose_angle_delta); //  Angular resolution for sampling grasp poses around the object
         stage->setMonitoredStage(current_state_ptr);  // Ensure grasp poses are valid given the initial configuration of the robot 
 
@@ -535,6 +566,7 @@ mtc::Task MTCTaskNode::createTask()
         wrapper->setIKFrame(vectorToEigen(grasp_frame_transform), gripper_frame); // Transform from gripper frame to tool center point (TCP)
         wrapper->properties().configureInitFrom(mtc::Stage::PARENT, { "eef", "group" });
         wrapper->properties().configureInitFrom(mtc::Stage::INTERFACE, { "target_pose" });
+        wrapper->setIgnoreCollisions(true);
         RCLCPP_INFO(this->get_logger(), "Starting 'generate grasp pose' stage...");
         grasp->insert(std::move(wrapper));
         }
@@ -543,7 +575,11 @@ mtc::Task MTCTaskNode::createTask()
     ---- *            Allow Collision (gripper,  object)   *
         ***************************************************/
         {
-        // Modify planning scene (w/o altering the robot's pose) to allow touching the object for picking
+        /**
+         * In many cases, it makes sense to allow certain collisions during a motion to increase the likelihood of finding valid solutions.
+         * Therefore, for the approach and grasp motions, collisions between the grasp object and the robot hand are allowed.
+         * We do this by adding a ModifyPlanningScene stage.
+         */
         auto stage =
             std::make_unique<mtc::stages::ModifyPlanningScene>("allow collision (gripper,object)");
         stage->allowCollisions(
