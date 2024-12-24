@@ -457,6 +457,7 @@ mtc::Task MTCTaskNode::createTask()
         });
     stage_move_to_pick->setTimeout(move_to_pick_timeout);
     stage_move_to_pick->properties().configureInitFrom(mtc::Stage::PARENT);
+
     task.add(std::move(stage_move_to_pick));
     RCLCPP_INFO(this->get_logger(), "Starting 'move to pick' stage...");
 
@@ -554,7 +555,7 @@ mtc::Task MTCTaskNode::createTask()
 
         stage->setPreGraspPose(gripper_open_pose);
         stage->setObject(object_name);
-        Eigen::Vector3d rotation_axis(0.0, 1.0, 0.0); // Y-axis of gripper, in this case going upward using the frame of the object
+        Eigen::Vector3d rotation_axis(0.0, -1.0, 0.0); // Y-axis of gripper, in this case going upward using the frame of the object
         stage->setRotationAxis(rotation_axis); // Rotate around the Y-axis
         stage->setAngleDelta(grasp_pose_angle_delta); //  Angular resolution for sampling grasp poses around the object
         stage->setMonitoredStage(current_state_ptr);  // Ensure grasp poses are valid given the initial configuration of the robot 
@@ -588,6 +589,8 @@ mtc::Task MTCTaskNode::createTask()
             ->getJointModelGroup(gripper_group_name)
             ->getLinkModelNamesWithCollisionGeometry(),
             true);
+        stage->allowCollisions("panda_leftfinger", "wood_cube", true);
+        stage->allowCollisions("panda_rightfinger", "wood_cube", true);
         RCLCPP_INFO(this->get_logger(), "Starting 'allow collision (gripper,object)' stage...");
         grasp->insert(std::move(stage));
         }
@@ -660,6 +663,8 @@ mtc::Task MTCTaskNode::createTask()
         auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("forbid collision (object,surface)");
         // stage->allowCollisions({ object_name }, {table_name}, false);
         stage->allowCollisions({ object_name }, {table_name}, false);
+        stage->allowCollisions("panda_leftfinger", "wood_cube", true);
+        stage->allowCollisions("panda_rightfinger", "wood_cube", true);
         RCLCPP_INFO(this->get_logger(), "Starting 'forbid collision (object,surface)' stage...");
         grasp->insert(std::move(stage));      
         }	 
@@ -767,6 +772,8 @@ mtc::Task MTCTaskNode::createTask()
         auto stage = std::make_unique<mtc::stages::ModifyPlanningScene>("forbid collision (gripper,object)");
         stage->allowCollisions(object_name, *task.getRobotModel()->getJointModelGroup(gripper_group_name),
             false);
+        stage->allowCollisions("panda_leftfinger", "wood_cube", true);
+        stage->allowCollisions("panda_rightfinger", "wood_cube", true);
         place->insert(std::move(stage));
         }
 

@@ -12,7 +12,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from moveit_configs_utils import MoveItConfigsBuilder
-import xacro
+from ament_index_python.packages import get_package_share_directory
  
  
 def generate_launch_description():
@@ -39,7 +39,7 @@ def generate_launch_description():
     kinematics_file_path = os.path.join(pkg_share_moveit_config, kinematics_file_path)
     pilz_cartesian_limits_file_path = os.path.join(pkg_share_moveit_config, pilz_cartesian_limits_file_path)
     initial_positions_file_path = os.path.join(pkg_share_moveit_config, initial_positions_file_path)
-    rviz_config_file = os.path.join(pkg_share_moveit_config, rviz_config_file_path)
+    # rviz_config_file = os.path.join(pkg_share_moveit_config, rviz_config_file_path)
 
     # Launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -90,6 +90,9 @@ def generate_launch_description():
             {'start_state': {'content': initial_positions_file_path}},
             move_group_capabilities,
         ],
+    )
+    rviz_config_file = (
+        get_package_share_directory("moveit_task_constructor_demo") + "/config/mtc.rviz"
     )
     # RViz
     start_rviz_node_cmd = Node(

@@ -2,6 +2,9 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="panda">
     <xacro:include filename="$(find robotpi_demo_robot_description)/urdf/ros2_control/panda/panda_gazebo_ros2_control.xacro"/>
 	<xacro:include filename="$(find robotpi_demo_robot_description)/urdf/ros2_control/panda/panda_ros2_control.xacro"/>
+    <xacro:property name="joint_effort" value="56.0"/>
+    <xacro:property name="joint_damping" value="0.0"/>
+    <xacro:property name="joint_friction" value="0.0"/>
 
   <link name="world"/>
 
@@ -331,6 +334,8 @@
         <parent link="panda_link8"/>
         <child link="panda_hand"/>
         <origin rpy="0 0 -0.785398163397" xyz="0 0 0"/>
+        <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+
     </joint>
 
     <joint name="panda_finger_joint1" type="prismatic">
@@ -339,6 +344,8 @@
         <origin rpy="0 0 0" xyz="0 0 0.0584"/>
         <axis xyz="0 1 0"/>
         <limit effort="20." lower="-0.001" upper="0.04" velocity="0.3"/>
+        <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+
     </joint>
 
     <joint name="panda_finger_joint2" type="prismatic">
@@ -347,6 +354,8 @@
         <origin rpy="0 0 0" xyz="0 0 0.0584"/>
         <axis xyz="0 -1 0"/>
         <limit effort="20." lower="-0.001" upper="0.04" velocity="0.3"/>
+        <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+
         <mimic joint="panda_finger_joint1" multiplier="1.0"/>
     </joint>
 
@@ -362,6 +371,25 @@
         <parent link="world"/>
         <child link="random"/>
     </joint>
+    <!-- <transmission name="panda_finger_trans1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="panda_finger_joint1">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="panda_finger_motor1">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+        <transmission name="panda_finger_trans2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="panda_finger_joint2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="panda_finger_motor2">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission> -->
+
     <!-- 
     <link name="camera">
         <visual>
@@ -389,8 +417,6 @@
         <origin xyz="0.5 -0.5 0" rpy="0.0 0.0 0.0"/>
     </joint>
      -->
-
-
     <gazebo reference="panda_link0">
       <material>Gazebo/White</material>
     </gazebo>
